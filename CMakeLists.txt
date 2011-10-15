@@ -1,0 +1,173 @@
+cmake_minimum_required ( VERSION 2.6 )
+
+# Project info
+project ( roadef11-common )
+
+set ( roadef11_VERSION_MAJOR 0 )
+set ( roadef11_VERSION_MINOR 1 )
+set ( roadef11_VERSION_PATCH 0 )
+
+# Packaging
+include ( InstallRequiredSystemLibraries )
+set ( CPACK_PACKAGE_DESCRIPTION_SUMMARY "roadef11 common headers (parser, objects, ...)" )
+set ( CPACK_PACKAGE_VENDOR "daniperez" )
+set ( CPACK_PACKAGE_VERSION_MAJOR "${roadef11_VERSION_MAJOR}" )
+set ( CPACK_PACKAGE_VERSION_MINOR "${roadef11_VERSION_MINOR}" )
+set ( CPACK_PACKAGE_VERSION_PATCH "${roadef11_VERSION_PATCH}" )
+set ( CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/README )
+set ( CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING" )
+set ( CPACK_GENERATOR "ZIP" )
+
+# Installation
+install( DIRECTORY roadef11-common
+         DESTINATION include/
+         FILES_MATCHING PATTERN *.hpp
+       )
+
+# Installation
+install( DIRECTORY roadef11-material/
+         DESTINATION share/${PROJECT_NAME}/material
+         FILES_MATCHING PATTERN *.txt
+       )
+
+# -------------------------------------------------------------------
+# Common stuff
+# -------------------------------------------------------------------
+
+# CMake scripts path
+  set ( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/scripts/ )
+
+# * BOOST
+  find_package ( Boost 1.44.0 COMPONENTS program_options date_time )
+  if ( Boost_FOUND)
+      include_directories ( ${Boost_INCLUDE_DIRS} )
+  endif ()
+
+# * DOXYGEN
+  set ( DOXYFILE_LATEX "NO" )
+  set ( DOXYFILE_SOURCE_DIR "${PROJECT_NAME}" )
+  set ( DOXYFILE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/doc" )
+  include ( UseDoxygen-1.2 OPTIONAL )
+  install ( DIRECTORY ${DOXYFILE_OUTPUT_DIR}/ DESTINATION share/${PROJECT_NAME}/doc )
+
+# Compile flags
+include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
+# This is set per folder (test/ and roadef11/ so far. material/
+# doesn't accept it):
+#set ( CMAKE_CXX_FLAGS "-std=c++0x -Wall -Werror" )
+
+# -------------------------------------------------------------------
+# Checker
+# -------------------------------------------------------------------
+file ( GLOB_RECURSE checker_SOURCES "roadef11-material/solution_checker/solution_checker.cc" )
+add_library ( checkerlib ${checker_SOURCES} )
+add_executable ( checker "roadef11-material/solution_checker/solution_checker_run.cc" )
+target_link_libraries ( checker checkerlib ) 
+
+# -------------------------------------------------------------------
+# Subdirs
+# -------------------------------------------------------------------
+add_subdirectory ( ${PROJECT_NAME} )
+
+# -------------------------------------------------------------------
+# make check (and test suite declaration) 
+# -------------------------------------------------------------------
+macro ( solve_instance NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
+
+    add_test ( NAME "testsuite-${NAME}-solution" 
+               COMMAND "$<TARGET_FILE:${PROJECT_NAME}>"
+                       "-p" "${MODEL}"
+                       "-i" "${INITIAL_SOLUTION}"
+                       "-o" "${SOLUTION}"
+                       "${CMD_ARGS}" )
+
+    set_tests_properties ( "testsuite-${NAME}-solution"
+                           PROPERTIES ENVIRONMENT
+                           "GLOG_logtostderr=1")
+
+
+    add_test ( NAME "testsuite-${NAME}-solution-check" 
+               COMMAND "$<TARGET_FILE:checker>"
+                       "${MODEL}"
+                       "${INITIAL_SOLUTION}"
+                       "${SOLUTION}" )
+    
+    # ${NAME} target writes log messages whereas "check" doesn't
+    # (only in case of failure)
+    add_custom_target (
+               "${NAME}"
+               COMMAND ${CMAKE_CTEST_COMMAND}
+                       -V
+                       -R "testsuite-${NAME}-solution"
+                       -E "testsuite-${NAME}-solution-check"
+               DEPENDS MainTestSuite ${PROJECT_NAME} )
+
+endmacro ()
+
+macro ( add_doxygen_test_suite )
+
+    if ( UNIX )
+
+        add_test (
+                   NAME "DoxygenErrors" 
+                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+                   COMMAND "${CMAKE_SOURCE_DIR}/scripts/doxytest.sh"
+                           "${DOXYGEN_EXECUTABLE}"
+                           "${DOXYFILE}"
+                 )
+    endif ()
+
+endmacro ()
+
+if ( Boost_FOUND )
+
+    include ( add_test_suite )
+
+    enable_testing() 
+
+    # * Main Test Suite
+    set (
+            MainTestSuiteSources 
+            tests/MainTest.cpp
+            tests/sanity/SanityTest.cpp
+        )
+
+    add_test_suite ( MainTestSuite "${MainTestSuiteSources}" )
+
+    # * Example instances
+    solve_instance (
+        "example"
+        "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_example/model_example.txt"
+        "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_example/initial_solution_example.txt"
+        "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_example/initial_solution_example.txt"
+        "-u" )
+
+    # * A1 instances
+    foreach ( i RANGE 1 5 )
+        solve_instance (
+            "a1-${i}"
+            "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_a1/model_a1_${i}.txt"
+            "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_a1/assignment_a1_${i}.txt"
+            "${CMAKE_BINARY_DIR}/solution_a1_${i}.txt"
+            "" )
+    endforeach ()
+
+    # * Doxgygen run (just seeking for missing documentation)
+    add_doxygen_test_suite ()
+
+    # Don't forget to add the test suite to the DEPENDS argument list.
+    # a1-1,a1-2,... targets write log messages whereas "check" doesn't
+    # (only in case of failure)
+    add_custom_target(
+                      check
+                      COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
+                      DEPENDS MainTestSuite ${PROJECT_NAME} checker
+                     )
+endif ()
+
+
+# -------------------------------------------------------------------
+# Packaging
+# -------------------------------------------------------------------
+include ( CPack )
+

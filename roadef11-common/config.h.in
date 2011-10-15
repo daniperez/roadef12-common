@@ -1,0 +1,5 @@
+#define PROJECT_SOURCE_DIR "@PROJECT_SOURCE_DIR@"
+#cmakedefine UNIX @UNIX@
+#cmakedefine WIN32 @WIN32@
+
+

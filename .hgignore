@@ -1,0 +1,10 @@
+syntax: glob
+
+*.swp
+*.pyc
+.redcar
+.project
+
+syntax: glob
+
+build/*

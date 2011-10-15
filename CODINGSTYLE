@@ -1,0 +1,176 @@
+Please use the following coding style :
+
+///////////////////////////////////////////////////////////////////////////
+//LENGTH
+///////////////////////////////////////////////////////////////////////////
+- NO MORE THAN 80 CHARACTERS ON A LINE
+- USE 4 SPACES INSTEAD OF TABS (STANDARD GNU) (use a mapping in your
+  editor if needed)
+- USE CAMELCASE (i.e. use myInt, not my_int)
+
+///////////////////////////////////////////////////////////////////////////
+//FUNCTION DECLARATIONS
+///////////////////////////////////////////////////////////////////////////
+- Use 2 lines for return type and function name
+
+// OK
+int
+myFunction();
+
+// not OK
+int myFunction();
+
+- If there are too much arguments for 80 chars lines, align them with
+  returns
+
+// OK
+int 
+myFunction(int myIntToDoSometingWith, int mySecondIntToDoSometingWith);
+
+// OK (better)
+int 
+myFunction(
+    int myIntToDoSometingWith, 
+    int mySecondIntToDoSometingWith
+    );
+
+// OK
+int 
+myFunction(
+    int myIntToDoSometingWith, 
+    int mySecondIntToDoSometingWith,
+    int myThirdIntToDoSomethingWith
+    );
+
+// not OK
+int
+myFunction(int myIntToDoSometingWith, int mySecondIntToDoSometingWith, int myThirdIntToDoSomethingWith);
+
+///////////////////////////////////////////////////////////////////////////
+//CURLY BRACES
+///////////////////////////////////////////////////////////////////////////
+
+// OK
+if (foo)
+{
+    bar();
+}
+else
+{
+    rab();
+}
+
+// not OK
+if (foo) {
+    bar();
+} else {
+    rab();
+}
+
+// OK
+int
+myFunction()
+{
+    return 0;
+}
+
+// not OK
+int
+myFunction() {
+    return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//RETURNS
+///////////////////////////////////////////////////////////////////////////
+
+- A function that returns something should only have ONE return statement
+
+// OK
+bool
+isNonNull(int * ptr)
+{
+    bool res;
+    if (ptr == NULL)
+    {
+        res = false;
+    }
+    else
+    {
+        res = true;
+    }
+    return res;
+}
+
+// not OK
+bool
+isNonNull(int * ptr)
+{
+    if (ptr == NULL)
+    {
+        return false;
+    }
+    return true;
+}
+
+- in case you think you can't avoid it for performance, you actually can
+
+// OK
+bool
+hasOneElementEqualsToNull(std::vector<int *> array)
+{
+    bool res = false;
+    for (vector<int *>::iterator it = array.begin(); it < array.end(); it++)
+    {
+        if(*it == NULL)
+        {
+            res = true;
+            break;
+        }
+    }
+    return res;
+}
+
+// not OK
+bool
+hasOneElementEqualsToNull(std::vector<int *> array)
+{
+    for (vector<int *>::iterator it = array.begin(); it < array.end(); it++)
+    {
+        if(*it == NULL)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+It is always better for the reader if there is only one return statement
+(and it is easier to debug). So please do it. You'll often need a variable
+for the result, but don't hesitate : the compiler can handle this kind of
+optimizations for you.
+
+///////////////////////////////////////////////////////////////////////////
+//DANI'S ADDENDUM
+///////////////////////////////////////////////////////////////////////////
+
+- Use horizontal space (everywhere in your code):
+
+// not OK
+bool
+foo(std::vector<int>& bar) throw (std::logic_error);
+
+// OK
+bool
+foo ( std::vector<int> & bar ) throw ( std::logic_error );
+
+- Our coding style leaves a lot of room for imagination, but still, be
+  consistent all along your code (or at least within the same file!).
+
+
+///////////////////////////////////////////////////////////////////////////
+
+That's all for the coding style.
+
+Last advice : AVOID functions longer than 15-20 lines. It is VERY annoying
+to scroll up and down all the time when you read code.
