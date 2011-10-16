@@ -290,7 +290,6 @@ namespace ROADEF11
              * Problem parameters.
              */ 
             const Parameters                    params;
-
              
             // WARNING: this must be declared after params.
             //          If a shared_ptr were passed to assignment,
@@ -298,7 +297,7 @@ namespace ROADEF11
             /**
              * First process to machine  assignment.
              */
-            Assignment                          firstAssignment;
+            const Assignment                    firstAssignment;
     };
 
 };
