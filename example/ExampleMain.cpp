@@ -65,8 +65,6 @@ class ExampleService : public ROADEF11::Service
                 firstAssignment.write ( options.solution.c_str() );
             }
         }
-
-        
 };
 
 int main ( int argc, char **argv )

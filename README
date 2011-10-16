@@ -1,2 +1,19 @@
 How to use roadef11-common
 ==========================
+
+roadef11-common is a header-only library. You can find in
+example/ExampleMain.cpp an example about how to use the library.
+
+In summary the steps shown ExampleMain are:
+
+    i. Subclass Service class (roadef11-common/service/Service.hpp).
+       Only Service::optimize and constructor have to be redefined.
+   ii. Call your Service subclass with the input given by 
+       ProgramOptions class (roadef11-common/service/ProgramOptions.hpp).
+  iii. Service class has the "params" attribute with the problem
+       parameters. "options" contains the command line options passed
+       to the executable in ProgramOptions. "firstAssignment" contains
+       the initial assignment of processes to machines.
+
+The only dependencies of the library are the STL and Boost's shared_ptr
+and foreach.

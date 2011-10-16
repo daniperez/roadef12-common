@@ -15,7 +15,9 @@ set ( CPACK_PACKAGE_VERSION_MAJOR "${roadef11_VERSION_MAJOR}" )
 set ( CPACK_PACKAGE_VERSION_MINOR "${roadef11_VERSION_MINOR}" )
 set ( CPACK_PACKAGE_VERSION_PATCH "${roadef11_VERSION_PATCH}" )
 set ( CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/README )
+set ( CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_SOURCE_DIR}/README )
 set ( CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING" )
+set ( CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${roadef11_VERSION_MAJOR}-${roadef11_VERSION_MINOR}-${roadef11_VERSION_PATCH}" )
 set ( CPACK_GENERATOR "ZIP" )
 
 # Installation
@@ -23,12 +25,17 @@ install( DIRECTORY roadef11-common
          DESTINATION include/
          FILES_MATCHING PATTERN *.hpp
        )
-
-# Installation
 install( DIRECTORY roadef11-material/
          DESTINATION share/${PROJECT_NAME}/material
          FILES_MATCHING PATTERN *.txt
        )
+
+install( FILES example/ExampleMain.cpp 
+         DESTINATION share/${PROJECT_NAME}/example/ )
+
+install( FILES README COPYING
+         DESTINATION share/${PROJECT_NAME}/ )
+
 
 # -------------------------------------------------------------------
 # Common stuff
@@ -48,7 +55,7 @@ install( DIRECTORY roadef11-material/
   set ( DOXYFILE_SOURCE_DIR "${PROJECT_NAME}" )
   set ( DOXYFILE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/doc" )
   include ( UseDoxygen-1.2 OPTIONAL )
-  install ( DIRECTORY ${DOXYFILE_OUTPUT_DIR}/ DESTINATION share/${PROJECT_NAME}/doc )
+  install ( DIRECTORY ${DOXYFILE_OUTPUT_DIR}/ DESTINATION share/${PROJECT_NAME}/doc OPTIONAL )
 
 # Compile flags
 include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
@@ -69,7 +76,7 @@ add_subdirectory ( ${PROJECT_NAME} )
 # -------------------------------------------------------------------
 # This will compile ExampleMain.cpp
 # -------------------------------------------------------------------
-add_executable ( ExampleMain tests/ExampleMain.cpp )
+add_executable ( ExampleMain example/ExampleMain.cpp )
 target_link_libraries ( ExampleMain ${Boost_LIBRARIES} )
 set_target_properties ( ExampleMain PROPERTIES COMPILE_FLAGS "-std=c++0x -Wall -Werror" )
 
