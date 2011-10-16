@@ -16,6 +16,7 @@ void FileToVector(const char* const filename, vector<int>* values) {
   values->clear();
 
   ifstream file(filename);
+
   ROADEF_CHK(file);
 
   int value = -1;

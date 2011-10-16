@@ -38,7 +38,7 @@ install( DIRECTORY roadef11-material/
   set ( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/scripts/ )
 
 # * BOOST
-  find_package ( Boost 1.44.0 COMPONENTS program_options date_time )
+  find_package ( Boost 1.44.0 COMPONENTS program_options date_time unit_test_framework )
   if ( Boost_FOUND)
       include_directories ( ${Boost_INCLUDE_DIRS} )
   endif ()
@@ -52,9 +52,6 @@ install( DIRECTORY roadef11-material/
 
 # Compile flags
 include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
-# This is set per folder (test/ and roadef11/ so far. material/
-# doesn't accept it):
-#set ( CMAKE_CXX_FLAGS "-std=c++0x -Wall -Werror" )
 
 # -------------------------------------------------------------------
 # Checker
@@ -70,21 +67,23 @@ target_link_libraries ( checker checkerlib )
 add_subdirectory ( ${PROJECT_NAME} )
 
 # -------------------------------------------------------------------
+# This will compile ExampleMain.cpp
+# -------------------------------------------------------------------
+add_executable ( ExampleMain tests/ExampleMain.cpp )
+target_link_libraries ( ExampleMain ${Boost_LIBRARIES} )
+set_target_properties ( ExampleMain PROPERTIES COMPILE_FLAGS "-std=c++0x -Wall -Werror" )
+
+# -------------------------------------------------------------------
 # make check (and test suite declaration) 
 # -------------------------------------------------------------------
 macro ( solve_instance NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
 
     add_test ( NAME "testsuite-${NAME}-solution" 
-               COMMAND "$<TARGET_FILE:${PROJECT_NAME}>"
+               COMMAND "$<TARGET_FILE:ExampleMain>"
                        "-p" "${MODEL}"
                        "-i" "${INITIAL_SOLUTION}"
                        "-o" "${SOLUTION}"
                        "${CMD_ARGS}" )
-
-    set_tests_properties ( "testsuite-${NAME}-solution"
-                           PROPERTIES ENVIRONMENT
-                           "GLOG_logtostderr=1")
-
 
     add_test ( NAME "testsuite-${NAME}-solution-check" 
                COMMAND "$<TARGET_FILE:checker>"
@@ -100,7 +99,7 @@ macro ( solve_instance NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
                        -V
                        -R "testsuite-${NAME}-solution"
                        -E "testsuite-${NAME}-solution-check"
-               DEPENDS MainTestSuite ${PROJECT_NAME} )
+               DEPENDS MainTestSuite ExampleMain )
 
 endmacro ()
 
@@ -134,6 +133,8 @@ if ( Boost_FOUND )
 
     add_test_suite ( MainTestSuite "${MainTestSuiteSources}" )
 
+    target_link_libraries ( MainTestSuite ${Boost_LIBRARIES} )
+
     # * Example instances
     solve_instance (
         "example"
@@ -161,7 +162,7 @@ if ( Boost_FOUND )
     add_custom_target(
                       check
                       COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
-                      DEPENDS MainTestSuite ${PROJECT_NAME} checker
+                      DEPENDS ExampleMain MainTestSuite checker
                      )
 endif ()
 

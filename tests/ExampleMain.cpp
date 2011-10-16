@@ -31,6 +31,44 @@
 #include <stdlib.h>
 ///////////////////////////////////////////////////////////////////////////
 
+class ExampleService : public ROADEF11::Service
+{
+    public:
+
+        ExampleService ( const ROADEF11::ServiceInput& input )
+            throw ( ROADEF11::IOException, ROADEF11::ParseException )
+            : ROADEF11::Service ( input )
+        {
+        }
+
+        virtual void optimize ()
+          throw ( ROADEF11::IOException, ROADEF11::ParseException )
+        {
+            std::cout << "processes=" << params.processes.size()
+                      << " machines=" << params.machines.size()
+                      << " resources=" << params.resources.size()
+                      << std::endl;
+
+            if ( options.nullCopy )
+            {
+                firstAssignment.write ( options.solution.c_str() );
+            }
+            else if ( options.nullNull )
+            {
+                // Do not perform any optimization, no output is produced.
+            }
+            else
+            {
+                std::cout << "Your code goes here" << std::endl;
+
+                // Don't forget to write a solution
+                firstAssignment.write ( options.solution.c_str() );
+            }
+        }
+
+        
+};
+
 int main ( int argc, char **argv )
 {
     try
@@ -38,7 +76,7 @@ int main ( int argc, char **argv )
         ROADEF11::ServiceInput input
             = ROADEF11::ProgramOptions::parseCommandLine ( argc, argv );
             
-        ROADEF11::Service service ( input );
+        ExampleService service ( input );
 
         std::cout << "Optimization started..." << std::endl;
 

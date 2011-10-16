@@ -108,15 +108,12 @@ namespace ROADEF11
              */
             Service ( const ROADEF11::ServiceInput& input )
             throw ( ROADEF11::IOException, ROADEF11::ParseException )
-                : _input        ( parseInput ( input ) ),
-                  _parameters   ( new Parameters(_parametersArray) ),
-                  _assignment
+                : options  ( parseInput ( input ) ),
+                  params   ( _parametersArray ),
+                  firstAssignment
                   (
-                      new Assignment
-                      (
-                          input.referenceSolution.c_str(),
-                          *_parameters
-                      )
+                      input.referenceSolution.c_str(),
+                      params
                   )
             {
             }
@@ -143,25 +140,25 @@ namespace ROADEF11
              */
             virtual void optimize () throw ( IOException, ParseException )
             {  
-                std::cout << "processes=" << _parameters->processes.size()
-                          << " machines=" << _parameters->machines.size()
-                          << " resources=" << _parameters->resources.size()
+                std::cout << "processes=" << params.processes.size()
+                          << " machines=" << params.machines.size()
+                          << " resources=" << params.resources.size()
                           << std::endl;
 
-                if ( _input.nullCopy )
+                if ( options.nullCopy )
                 {
-                    _assignment->write ( _input.solution.c_str() );
+                    firstAssignment.write ( options.solution.c_str() );
                 }
-                else if ( _input.nullNull )
+                else if ( options.nullNull )
                 {
                     // Do not perform any optimization, no output is produced.
                 }
                 else
                 {
-                    _assignment->write ( _input.solution.c_str() );
+                    firstAssignment.write ( options.solution.c_str() );
                 }
             }
-                        
+
             /**
              * Uses the checker, as provided by ROADEF, to check the
              * solution. Returns the objective function value. This
@@ -188,9 +185,9 @@ namespace ROADEF11
                 vector<int> initial_assignments;
                 vector<int> new_assignments;
 
-                FileParser::parseVector ( _input.parameters.c_str(), model );
-                FileParser::parseVector ( _input.referenceSolution.c_str(), initial_assignments );
-                FileParser::parseVector ( _input.solution.c_str(), new_assignments );
+                FileParser::parseVector ( options.parameters.c_str(), model );
+                FileParser::parseVector ( options.referenceSolution.c_str(), initial_assignments );
+                FileParser::parseVector ( options.solution.c_str(), new_assignments );
 
                 DataParser data(model,
                                 initial_assignments,
@@ -232,28 +229,28 @@ namespace ROADEF11
                 
                 output << "Instance: " << std::endl;
                 
-                output << "  Resources (" << _parameters->resources.size() << ")" << std::endl;
-                for ( uint i = 0 ; i < _parameters->resources.size() ; ++i )
+                output << "  Resources (" << params.resources.size() << ")" << std::endl;
+                for ( uint i = 0 ; i < params.resources.size() ; ++i )
                 {
-                    output << _parameters->resources.toString ( i );
+                    output << params.resources.toString ( i );
                 }
-                output << "  Machines (" << _parameters->machines.size() << ")" << std::endl;
-                for ( uint i = 0 ; i < _parameters->machines.size() ; ++i )
+                output << "  Machines (" << params.machines.size() << ")" << std::endl;
+                for ( uint i = 0 ; i < params.machines.size() ; ++i )
                 {
-                    output << _parameters->machines.toString ( i );
+                    output << params.machines.toString ( i );
                 }
-                output << "  Services (" << _parameters->services.size() << ")" << std::endl;
-                for ( uint i = 0 ; i < _parameters->services.size() ; ++i )
+                output << "  Services (" << params.services.size() << ")" << std::endl;
+                for ( uint i = 0 ; i < params.services.size() ; ++i )
                 {
-                    output << _parameters->services.toString ( i );
+                    output << params.services.toString ( i );
                 }
-                output << "  Processes (" << _parameters->processes.size() << ")" << std::endl;
-                for ( uint i = 0 ; i < _parameters->processes.size() ; ++i )
+                output << "  Processes (" << params.processes.size() << ")" << std::endl;
+                for ( uint i = 0 ; i < params.processes.size() ; ++i )
                 {
-                    output << _parameters->processes.toString ( i );
+                    output << params.processes.toString ( i );
                 }
                 output << "  Costs" << std::endl;
-                output << _parameters->costs.toString ();
+                output << params.costs.toString ();
                 
                 return output.str();
             }
@@ -279,17 +276,29 @@ namespace ROADEF11
             
         private:
              
-             // WARNING: this must be declared before _input
+             // WARNING: this must be declared before options
              std::vector<int>                    _parametersArray;
              
-             const ROADEF11::ServiceInput&       _input;
+        public:
+
+            /**
+             * The parsed command line options.
+             */           
+            const ROADEF11::ServiceInput&       options;
+            
+            /**
+             * Problem parameters.
+             */ 
+            const Parameters                    params;
+
              
-             boost::shared_ptr<const Parameters> _parameters;
-             
-             // WARNING: this must be declared after _parameters.
-             //          If a shared_ptr were passed to assignment,
-             //          we could use any order.
-             boost::shared_ptr<Assignment>       _assignment;
+            // WARNING: this must be declared after params.
+            //          If a shared_ptr were passed to assignment,
+            //          we could use any order.
+            /**
+             * First process to machine  assignment.
+             */
+            Assignment                          firstAssignment;
     };
 
 };
