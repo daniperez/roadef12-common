@@ -36,6 +36,9 @@ install( DIRECTORY roadef11-material/
          FILES_MATCHING PATTERN *.txt
        )
 
+install( FILES scripts/FindRoadef11Common.cmake
+         DESTINATION share/${PROJECT_NAME}/cmake/ )
+
 install( FILES example/ExampleMain.cpp 
          DESTINATION share/${PROJECT_NAME}/example/ )
 
@@ -63,6 +66,10 @@ install( FILES README COPYING ChangeLog
   include ( UseDoxygen-1.2 OPTIONAL )
   install ( DIRECTORY ${DOXYFILE_OUTPUT_DIR}/ DESTINATION share/${PROJECT_NAME}/doc OPTIONAL )
 
+# * The only purpose of this find_package is to load a pair of macros we
+#   put in FindRoadef11Common.cmake
+find_package ( Roadef11Common )
+
 # Compile flags
 include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
 
@@ -86,58 +93,13 @@ add_executable ( ExampleMain example/ExampleMain.cpp )
 target_link_libraries ( ExampleMain ${Boost_LIBRARIES} )
 set_target_properties ( ExampleMain PROPERTIES COMPILE_FLAGS "-std=c++0x -Wall -Werror" )
 
-# -------------------------------------------------------------------
-# make check (and test suite declaration) 
-# -------------------------------------------------------------------
-macro ( solve_instance NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
-
-    add_test ( NAME "testsuite-${NAME}-solution" 
-               COMMAND "$<TARGET_FILE:ExampleMain>"
-                       "-p" "${MODEL}"
-                       "-i" "${INITIAL_SOLUTION}"
-                       "-o" "${SOLUTION}"
-                       "${CMD_ARGS}" )
-
-    add_test ( NAME "testsuite-${NAME}-solution-check" 
-               COMMAND "$<TARGET_FILE:checker>"
-                       "${MODEL}"
-                       "${INITIAL_SOLUTION}"
-                       "${SOLUTION}" )
-    
-    # ${NAME} target writes log messages whereas "check" doesn't
-    # (only in case of failure)
-    add_custom_target (
-               "${NAME}"
-               COMMAND ${CMAKE_CTEST_COMMAND}
-                       -V
-                       -R "testsuite-${NAME}-solution"
-                       -E "testsuite-${NAME}-solution-check"
-               DEPENDS MainTestSuite ExampleMain )
-
-endmacro ()
-
-macro ( add_doxygen_test_suite )
-
-    if ( UNIX )
-
-        add_test (
-                   NAME "DoxygenErrors" 
-                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-                   COMMAND "${CMAKE_SOURCE_DIR}/scripts/doxytest.sh"
-                           "${DOXYGEN_EXECUTABLE}"
-                           "${DOXYFILE}"
-                 )
-    endif ()
-
-endmacro ()
-
 if ( Boost_FOUND )
 
     include ( add_test_suite )
 
     enable_testing() 
 
-    # * Main Test Suite
+    # i) Main Test Suite
     set (
             MainTestSuiteSources 
             tests/MainTest.cpp
@@ -148,17 +110,21 @@ if ( Boost_FOUND )
 
     target_link_libraries ( MainTestSuite ${Boost_LIBRARIES} )
 
-    # * Example instances
+    # ii) Example instances
     solve_instance (
+        "$<TARGET_FILE:ExampleMain>"
+        "$<TARGET_FILE:checker>"
         "example"
         "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_example/model_example.txt"
         "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_example/initial_solution_example.txt"
         "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_example/initial_solution_example.txt"
         "-u" )
 
-    # * A1 instances
+    # iii) A1 instances
     foreach ( i RANGE 1 5 )
         solve_instance (
+            "$<TARGET_FILE:ExampleMain>"
+            "$<TARGET_FILE:checker>"
             "a1-${i}"
             "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_a1/model_a1_${i}.txt"
             "${CMAKE_SOURCE_DIR}/roadef11-material/data/data_a1/assignment_a1_${i}.txt"
@@ -166,7 +132,7 @@ if ( Boost_FOUND )
             "" )
     endforeach ()
 
-    # * Doxgygen run (just seeking for missing documentation)
+    # iv) Doxgygen run (just seeking for missing documentation)
     add_doxygen_test_suite ()
 
     # Don't forget to add the test suite to the DEPENDS argument list.
