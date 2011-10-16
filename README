@@ -1,10 +1,10 @@
 How to use roadef11-common
 ==========================
 
-roadef11-common is a header-only library. You can find in
-example/ExampleMain.cpp an example about how to use the library.
+roadef11-common is a header-only library. You can find an example
+of use in example/ExampleMain.cpp.
 
-In summary the steps shown ExampleMain are:
+In summary, the steps shown in ExampleMain.cpp are:
 
     i. Subclass Service class (roadef11-common/service/Service.hpp).
        Only Service::optimize and constructor have to be redefined.

@@ -33,7 +33,7 @@ install( DIRECTORY roadef11-material/
 install( FILES example/ExampleMain.cpp 
          DESTINATION share/${PROJECT_NAME}/example/ )
 
-install( FILES README COPYING
+install( FILES README COPYING ChangeLog
          DESTINATION share/${PROJECT_NAME}/ )
 
 
