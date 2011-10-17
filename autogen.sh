@@ -3,7 +3,7 @@
 # This script creates all the configs found under configs/ folder
 # having ".conf" file extension.
 #
-# Author: dani.perez 
+# Author: daniperez 
 #
 
 _BUILD_DIR=build
