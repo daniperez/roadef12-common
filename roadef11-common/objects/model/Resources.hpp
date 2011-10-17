@@ -28,6 +28,7 @@
 // STD
 #include <vector>
 #include <stdexcept>
+#include <iostream>
 ///////////////////////////////////////////////////////////////////////////
 // BOOST
 #include <boost/shared_ptr.hpp>

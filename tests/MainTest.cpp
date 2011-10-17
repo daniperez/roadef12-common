@@ -20,21 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
+///////////////////////////////////////////////////////////////////////////
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE example
+///////////////////////////////////////////////////////////////////////////
+// BOOST
 #include <boost/test/unit_test.hpp>
 #include <boost/test/detail/unit_test_parameters.hpp>
+///////////////////////////////////////////////////////////////////////////
 
 // This can be set in runtime:
 //
-// e.g.: ./roadef11/TestSuite --output_format=XML --report_level=detailed --show_progress=yes
+// e.g.: ./roadef11/TestSuite --output_format=XML --report_level=detailed \
+//       --show_progress=yes
 //
 struct MyConfig
 {
     MyConfig()
     {
-       boost::unit_test::unit_test_log.set_threshold_level( boost::unit_test::log_successful_tests ); 
-       boost::unit_test::unit_test_log.set_format( boost::unit_test::CLF );
+        boost::unit_test::unit_test_log.set_threshold_level
+        (
+            boost::unit_test::log_successful_tests
+        ); 
+
+        boost::unit_test::unit_test_log.set_format( boost::unit_test::CLF );
     }
 
     ~MyConfig()
