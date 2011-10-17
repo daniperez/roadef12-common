@@ -34,9 +34,15 @@ ROADEF11::ServiceInput getExampleServiceInput()
 {
     ROADEF11::ServiceInput input;
     
-    input.parameters = std::string(PROJECT_SOURCE_DIR) + "/roadef11-material/data/data_example/model_example.txt";
-    input.referenceSolution = std::string(PROJECT_SOURCE_DIR) + "/roadef11-material/data/data_example/initial_solution_example.txt";
-    input.solution = std::string(PROJECT_SOURCE_DIR) + "/roadef11-material/data/data_example/new_solution_example.txt";
+    input.parameters
+      = std::string(PROJECT_SOURCE_DIR) +
+        "/roadef11-material/data/data_example/model_example.txt";
+    input.referenceSolution
+      = std::string(PROJECT_SOURCE_DIR) +
+        "/roadef11-material/data/data_example/initial_solution_example.txt";
+    input.solution
+      = std::string(PROJECT_SOURCE_DIR) +
+        "/roadef11-material/data/data_example/new_solution_example.txt";
     
     return input;
 }
@@ -55,7 +61,8 @@ BOOST_AUTO_TEST_CASE( SanityCheck02 )
     // This will print the team's name in the stdout and
     // throw DoNotContinue exception.
     BOOST_CHECK_THROW (
-        ROADEF11::ProgramOptions::parseCommandLine ( 2, const_cast<char**>(commandLine)),
+        ROADEF11::ProgramOptions::parseCommandLine
+          ( 2, const_cast<char**>(commandLine)),
         ROADEF11::DoNotContinue
     );
 }
