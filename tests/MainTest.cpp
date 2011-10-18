@@ -31,7 +31,7 @@
 
 // This can be set in runtime:
 //
-// e.g.: ./roadef11/TestSuite --output_format=XML --report_level=detailed \
+// e.g.: ./roadef11/TestSuite --output_format=XML --report_level=detailed
 //       --show_progress=yes
 //
 struct MyConfig

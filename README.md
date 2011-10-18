@@ -32,4 +32,5 @@ lexical_cast and foreach.
 
 The library can be checked out in your sources or you can use the
 packages in [download section](/daniperez/roadef11-common/downloads). **An RPM
-and CMake support comming soon**
+package and a better CMake script to use this library in your CMake project,
+comming soon**
