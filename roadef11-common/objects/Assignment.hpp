@@ -224,7 +224,8 @@ namespace ROADEF11
              * @param process Process to migrate.
              * @param newMachine Machine to move the process to.
              */
-            void move ( uint process, uint newMachine )
+            void
+            move ( uint process, uint newMachine )
             {
                 // TODO
             }

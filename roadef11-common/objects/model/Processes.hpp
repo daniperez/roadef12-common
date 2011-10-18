@@ -64,7 +64,8 @@ namespace ROADEF11
              * 
              * @return number of processes.
              */
-            uint size () const
+            uint
+            size () const
             {
                 return _values [ startIndex() ];
             }
@@ -81,7 +82,8 @@ namespace ROADEF11
              * @param processId Process' id.
              * @return Id of the service.
              */ 
-            int getService ( uint processId ) const
+            int
+            getService ( uint processId ) const
             {                
                 return _values [ getServiceStartIndex ( processId ) ]; 
             }
@@ -92,7 +94,8 @@ namespace ROADEF11
              * @param processId Process' id.
              * @return PMC.
              */ 
-            int getPMC ( uint processId ) const
+            int
+            getPMC ( uint processId ) const
             {
                 return _values [ getResourcesStartIndex( processId ) +
                                  _resources.size() ]; 
@@ -110,12 +113,12 @@ namespace ROADEF11
              * @param resourceId Resource's id.
              * @return Requirements of the given resource.
              */ 
-            int getRequirement ( uint processId, uint resourceId ) const
+            int
+            getRequirement ( uint processId, uint resourceId ) const
             {
                 return _values [ getResourcesStartIndex( processId ) +
                                  resourceId ]; 
             }
-            
             ///@}
             
             /**
@@ -124,7 +127,8 @@ namespace ROADEF11
              * @param processId Process' id.
              * @return Process' representation for debugging purposes.
              */
-            std::string toString ( uint processId ) const
+            std::string
+            toString ( uint processId ) const
             {
                 assert ( exists ( processId ) );
                 
@@ -161,7 +165,8 @@ namespace ROADEF11
              * @param processId Process's id.
              * @return True if the process exists, false otherwise.
              */ 
-            bool exists ( uint processId ) const
+            bool
+            exists ( uint processId ) const
             {
                 if ( processId >= size() )
                 {
@@ -179,7 +184,6 @@ namespace ROADEF11
                    return true; 
                 }                
             }
-            
             ///@}
             
         public:
@@ -194,7 +198,8 @@ namespace ROADEF11
              * 
              * @return Index of the start of definition.
              */ 
-            uint startIndex () const
+            uint
+            startIndex () const
             {
                 return _services.startIndex() +
                        _services.getAllServicesDefinitionSize();
@@ -205,7 +210,8 @@ namespace ROADEF11
              * 
              * @return The number of integers it takes to define a machine.
              */
-            uint getDefinitionSize () const
+            uint
+            getDefinitionSize () const
             {
                 return 1 + _resources.size() + 1;
             }
@@ -217,7 +223,8 @@ namespace ROADEF11
              * @param processId Process' id.
              * @return Index of process' service.
              */ 
-            uint getServiceStartIndex ( uint processId ) const
+            uint
+            getServiceStartIndex ( uint processId ) const
             {
                 return startIndex() + 1 + processId*getDefinitionSize();
             }
@@ -229,11 +236,11 @@ namespace ROADEF11
              * @param processId Process' id.
              * @return Index of the firt resource used by the process.
              */
-            uint getResourcesStartIndex ( uint processId )  const
+            uint
+            getResourcesStartIndex ( uint processId )  const
             {
                 return getServiceStartIndex ( processId) + 1;    
             }
-
             ///@}
             
         private:

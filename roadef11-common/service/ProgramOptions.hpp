@@ -52,13 +52,14 @@ namespace ROADEF11
          * @param argv Command-line switches including program name.
          * @return ROADEF11::ServiceInput.
          */    
-        static ROADEF11::ServiceInput parseCommandLine ( int argc, char** argv )
-        throw
-        (
-            ROADEF11::InvalidParametersException,
-            ROADEF11::IOException,
-            ROADEF11::DoNotContinue
-        )
+        static ROADEF11::ServiceInput
+        parseCommandLine ( int argc, char** argv )
+          throw
+          (
+              ROADEF11::InvalidParametersException,
+              ROADEF11::IOException,
+              ROADEF11::DoNotContinue
+          )
         {   
             ROADEF11::ServiceInput input;
             
@@ -105,7 +106,8 @@ namespace ROADEF11
          * @param argv Command-line switches including program name.
          * @param input ROADEF11::ServiceInput output argument.
          */     
-        static ROADEF11::ServiceInput& processParsedOptions
+        static ROADEF11::ServiceInput&
+        processParsedOptions
         (
             const boost::program_options::variables_map& vm,
             const boost::program_options::options_description& options,
@@ -113,12 +115,12 @@ namespace ROADEF11
             char** argv,
             ROADEF11::ServiceInput& input
         )
-        throw
-        (
-            ROADEF11::InvalidParametersException,
-            ROADEF11::IOException,
-            ROADEF11::DoNotContinue
-        )
+          throw
+          (
+              ROADEF11::InvalidParametersException,
+              ROADEF11::IOException,
+              ROADEF11::DoNotContinue
+          )
         {
             if ( vm.count("help") )
             {
@@ -161,13 +163,14 @@ namespace ROADEF11
          * @throw ROADEF11::DoNotContinue if the application can finish
          *                                after calling this method.
          */
-        static void checkForSpecialSwitches
+        static
+        void checkForSpecialSwitches
         (
             int argc,
             char** argv,
             const boost::program_options::options_description& options
         )
-        throw ( ROADEF11::DoNotContinue )
+          throw ( ROADEF11::DoNotContinue )
         {
             if ( argc == 1 )
             {
@@ -262,7 +265,6 @@ namespace ROADEF11
             return allOptionsDesc;
         }
     };
-
 };
 
 #endif

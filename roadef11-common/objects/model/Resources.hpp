@@ -59,7 +59,8 @@ namespace ROADEF11
              * 
              * @return number of resources.
              */
-            uint size () const
+            uint
+            size () const
             {
                 return _values [ startIndex() ];
             }
@@ -77,7 +78,8 @@ namespace ROADEF11
              * @return True if the resource is transient, false
              *         otherwise.
              */
-            bool isTransient ( uint resourceId ) const
+            bool
+            isTransient ( uint resourceId ) const
             {
                 assert ( exists ( resourceId ) );
                 
@@ -90,7 +92,8 @@ namespace ROADEF11
              * @param resourceId Resource's id.
              * @return Resource's representation for debugging purposes.
              */
-            std::string toString ( uint resourceId ) const
+            std::string
+            toString ( uint resourceId ) const
             {
                 assert ( exists ( resourceId ) );
                 
@@ -111,7 +114,8 @@ namespace ROADEF11
              * @param resourceId Resource's id.
              * @return True if the resource exists, false otherwise.
              */ 
-            bool exists ( uint resourceId ) const
+            bool
+            exists ( uint resourceId ) const
             {
                 if ( resourceId >= size() )
                 {
@@ -129,7 +133,6 @@ namespace ROADEF11
                    return true; 
                 }                
             }
-            
             ///@}
             
         public:
@@ -144,7 +147,8 @@ namespace ROADEF11
              * 
              * @return Index of the start of definition.
              */ 
-            uint startIndex () const
+            uint
+            startIndex () const
             {
                 return 0;
             }
@@ -154,11 +158,11 @@ namespace ROADEF11
              * 
              * @return The number of integers it takes to define a resource.
              */
-            uint getDefinitionSize () const
+            uint
+            getDefinitionSize () const
             {
                 return 2;
             }
-            
             ///@}
                
         private:

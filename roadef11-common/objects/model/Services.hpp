@@ -120,7 +120,8 @@ namespace ROADEF11
              * 
              * @return number of services.
              */
-            uint size () const
+            uint
+            size () const
             {
                 return _services.size();
             }
@@ -137,7 +138,8 @@ namespace ROADEF11
              * @param serviceId service's id.
              * @return Service's representation for debugging purposes.
              */
-            std::string toString ( uint serviceId ) const
+            std::string
+            toString ( uint serviceId ) const
             {
                 assert ( exists ( serviceId ) );
                 
@@ -170,7 +172,8 @@ namespace ROADEF11
              * @param serviceId Service's id.
              * @return True if the service exists, false otherwise.
              */ 
-            bool exists ( uint serviceId ) const
+            bool
+            exists ( uint serviceId ) const
             {
                 if ( serviceId >= size() )
                 {
@@ -195,13 +198,13 @@ namespace ROADEF11
              * @param serviceId the id of the service you are looking for.
              * @return Service.
              */ 
-            boost::shared_ptr<const Service> get ( ushort serviceId ) const
+            boost::shared_ptr<const Service>
+            get ( ushort serviceId ) const
             {
                 assert ( serviceId < size() );
                 
                 return _services [ serviceId ];
             }
-            
             ///@}
             
         public:
@@ -216,7 +219,8 @@ namespace ROADEF11
              * 
              * @return Index of the start of definition.
              */ 
-            uint startIndex () const
+            uint
+            startIndex () const
             {
                 return _machines.startIndex() +
                        1 +
@@ -228,11 +232,11 @@ namespace ROADEF11
              * 
              * @return The number of integers it takes to define a machine.
              */
-            uint getAllServicesDefinitionSize () const
+            uint
+            getAllServicesDefinitionSize () const
             {
                 return _definitionSize;
             }
-                   
             ///@}
             
         private:
