@@ -18,7 +18,7 @@ set ( CPACK_PACKAGE_VENDOR "daniperez" )
 set ( CPACK_PACKAGE_VERSION_MAJOR "${roadef11_VERSION_MAJOR}" )
 set ( CPACK_PACKAGE_VERSION_MINOR "${roadef11_VERSION_MINOR}" )
 set ( CPACK_PACKAGE_VERSION_PATCH "${roadef11_VERSION_PATCH}" )
-set ( CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_SOURCE_DIR}/README )
+set ( CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_SOURCE_DIR}/README.md )
 set ( CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING" )
 set ( CPACK_PACKAGE_FILE_NAME
       "${PROJECT_NAME}-${roadef11_VERSION_MAJOR}-${roadef11_VERSION_MINOR}-${roadef11_VERSION_PATCH}" )
@@ -52,7 +52,7 @@ install( FILES scripts/FindRoadef11Common.cmake
 install( FILES example/ExampleMain.cpp 
          DESTINATION share/${PROJECT_NAME}/example/ )
 
-install( FILES README COPYING ChangeLog
+install( FILES README.md COPYING ChangeLog
          DESTINATION share/${PROJECT_NAME}/ )
 
 # -------------------------------------------------------------------
