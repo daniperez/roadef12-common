@@ -59,7 +59,8 @@ namespace ROADEF11
              * 
              * @return number of machines.
              */
-            uint size () const
+            uint
+            size () const
             {
                 return _values [ startIndex() ];
             }
@@ -76,7 +77,8 @@ namespace ROADEF11
              * @param machineId Machine's id.
              * @return Neighborhood's id.
              */ 
-            int getNeighborhood ( uint machineId ) const
+            int
+            getNeighborhood ( uint machineId ) const
             {
                 assert ( exists ( machineId ) );
 
@@ -89,7 +91,8 @@ namespace ROADEF11
              * @param machineId Machine's id.
              * @return Location's id.
              */ 
-            int getLocation ( uint machineId ) const
+            int
+            getLocation ( uint machineId ) const
             {
                 assert ( exists ( machineId ) );
 
@@ -107,7 +110,8 @@ namespace ROADEF11
              * @param resourceId Resource's id.
              * @return Capacity.
              */ 
-            int getCapacity ( uint machineId, uint resourceId ) const
+            int
+            getCapacity ( uint machineId, uint resourceId ) const
             {
                 assert ( exists ( machineId ) );
 
@@ -123,7 +127,8 @@ namespace ROADEF11
              * @param resourceId Resource's id.
              * @return Safety capacity.
              */ 
-            int getSafetyCapacity ( uint machineId, uint resourceId ) const
+            int
+            getSafetyCapacity ( uint machineId, uint resourceId ) const
             {
                 assert ( exists ( machineId ) );
 
@@ -141,7 +146,8 @@ namespace ROADEF11
              * @param moveToMachineId Destination machine's id.
              * @return Moving cost.
              */ 
-            int getMovingCost ( uint machineId, uint moveToMachineId ) const
+            int
+            getMovingCost ( uint machineId, uint moveToMachineId ) const
             {
                 assert ( exists ( machineId ) );
                 assert ( exists ( moveToMachineId ) );
@@ -151,7 +157,6 @@ namespace ROADEF11
                                  _resources.size() +
                                  moveToMachineId ]; 
             }
-            
             ///@}
             
             /**
@@ -160,7 +165,8 @@ namespace ROADEF11
              * @param machineId Machine's id.
              * @return Machine's representation for debugging purposes.
              */
-            std::string toString ( uint machineId ) const
+            std::string
+            toString ( uint machineId ) const
             {
                 assert ( exists ( machineId ) );
                 
@@ -218,7 +224,8 @@ namespace ROADEF11
              * @param machineId Machine's id.
              * @return True if the machine exists, false otherwise.
              */ 
-            bool exists ( uint machineId ) const
+            bool
+            exists ( uint machineId ) const
             {
                 if ( machineId >= size() )
                 {
@@ -236,7 +243,6 @@ namespace ROADEF11
                    return true; 
                 }                
             }
-            
             ///@}
             
         public:
@@ -251,7 +257,8 @@ namespace ROADEF11
              * 
              * @return Index of the start of definition.
              */ 
-            uint startIndex () const
+            uint
+            startIndex () const
             {
                 return 1 +  _resources.size()*_resources.getDefinitionSize();
             }
@@ -261,7 +268,8 @@ namespace ROADEF11
              * 
              * @return The number of integers it takes to define a machine.
              */
-            uint getDefinitionSize () const
+            uint
+            getDefinitionSize () const
             {
                 return 1 + 1 + _resources.size() + _resources.size() +
                       size();
@@ -273,7 +281,8 @@ namespace ROADEF11
              * @param machineId Machine's id.
              * @return Index of its the neightborhood.
              */ 
-            uint getNeighborhoodIndex ( uint machineId ) const
+            uint
+            getNeighborhoodIndex ( uint machineId ) const
             {
                 // We jump size
                 uint idx = startIndex() + 1;
@@ -290,11 +299,11 @@ namespace ROADEF11
              * @param machineId Machine's id.
              * @return Index of its the neightborhood.
              */
-            uint getCapacitiesIndex ( uint machineId ) const
+            uint
+            getCapacitiesIndex ( uint machineId ) const
             {
                 return getNeighborhoodIndex ( machineId ) + 1 + 1 ;
             }
-
             ///@}
             
         private:

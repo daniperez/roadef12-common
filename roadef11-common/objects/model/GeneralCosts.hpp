@@ -64,7 +64,8 @@ namespace ROADEF11
              * 
              * @return Cost's representation for debugging purposes.
              */
-            std::string toString () const
+            std::string
+            toString () const
             {
                 std::string output;
                                 
@@ -127,7 +128,8 @@ namespace ROADEF11
              *
              * @return Number of objective balance constraints.
              */    
-            uint getNumObjectiveBalance() const
+            uint
+            getNumObjectiveBalance() const
             {
                 return _values [ startIndex() ];
             }
@@ -138,7 +140,8 @@ namespace ROADEF11
              * @param balanceId Balance's id.
              * @return Id of first resource of balance.
              */ 
-            int getObjectiveBalanceR1 ( uint balanceId ) const
+            int
+            getObjectiveBalanceR1 ( uint balanceId ) const
             {
                 assert ( objectiveBalanceExists ( balanceId ) );
 
@@ -152,7 +155,8 @@ namespace ROADEF11
              * @param balanceId Balance's id.
              * @return Id of second resource of balance.
              */ 
-            int getObjectiveBalanceR2 ( uint balanceId ) const
+            int
+            getObjectiveBalanceR2 ( uint balanceId ) const
             {
                 assert ( objectiveBalanceExists ( balanceId ) );
 
@@ -166,7 +170,8 @@ namespace ROADEF11
              * @param balanceId Balance's id.
              * @return Target of the balance.
              */ 
-            int getObjectiveBalanceTarget ( uint balanceId ) const
+            int
+            getObjectiveBalanceTarget ( uint balanceId ) const
             {
                 assert ( objectiveBalanceExists ( balanceId ) );
 
@@ -181,7 +186,8 @@ namespace ROADEF11
              * @param balanceId Balance's id.
              * @return weight from 0 to 100 of the balance cost.
              */ 
-            uint getBalanceCostWeight( uint balanceId ) const
+            uint
+            getBalanceCostWeight( uint balanceId ) const
             {
                 return _values [ startIndex() + 1 +
                                  balanceId*getBalanceDefinitionSize() +
@@ -194,7 +200,8 @@ namespace ROADEF11
              * @param balanceId Objective balance's id.
              * @return True if the obj. balance exists, false otherwise.
              */ 
-            bool objectiveBalanceExists ( uint balanceId ) const
+            bool
+            objectiveBalanceExists ( uint balanceId ) const
             {
                 if ( balanceId >= getNumObjectiveBalance() )
                 {
@@ -213,7 +220,6 @@ namespace ROADEF11
                    return true; 
                 }                                
             }
-            
             ///@}
             
             /**
@@ -226,7 +232,8 @@ namespace ROADEF11
              * 
              * @return Process move cost's weight.
              */
-            uint getProcessMoveCostWeight () const
+            uint
+            getProcessMoveCostWeight () const
             {
                 return _values [
                     startIndex() + 1 +
@@ -239,7 +246,8 @@ namespace ROADEF11
              * 
              * @return Service move cost's weight.
              */
-            uint getServiceMoveCostWeight () const
+            uint
+            getServiceMoveCostWeight () const
             {
                 return _values [
                     startIndex() + 1 +
@@ -252,7 +260,8 @@ namespace ROADEF11
              * 
              * @return Machine move cost's weight.
              */
-            uint getMachineMoveCostWeight () const
+            uint
+            getMachineMoveCostWeight () const
             {
                 return _values [
                     startIndex() + 1 +
@@ -266,7 +275,8 @@ namespace ROADEF11
              * @param resourceId Resource's id.
              * @return Resource's load cost weight from 0 to 100.
              */ 
-            int getLoadCostWeight ( uint resourceId ) const
+            int
+            getLoadCostWeight ( uint resourceId ) const
             {
                 assert ( _resources.exists ( resourceId ) );
 
@@ -279,7 +289,6 @@ namespace ROADEF11
                       1
                     ]; 
             }
-  
             ///@}
             
       public:
@@ -294,7 +303,8 @@ namespace ROADEF11
              * 
              * @return Index of the start of definition.
              */ 
-            uint startIndex () const
+            uint
+            startIndex () const
             {
                 return _processes.startIndex() + 1 +
                        _processes.size()*_processes.getDefinitionSize();
@@ -305,11 +315,11 @@ namespace ROADEF11
              * 
              * @return Fixed size it takes to define an objective balance.
              */
-            uint getBalanceDefinitionSize () const
+            uint
+            getBalanceDefinitionSize () const
             {
                 return 4;
             }
-
             ///@}
             
         private:
