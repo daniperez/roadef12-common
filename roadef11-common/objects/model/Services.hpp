@@ -40,7 +40,7 @@ namespace ROADEF11
             
             /**
             * Abstraction of a service. Services needs of a holder class
-            * ("Service". note the lack of "s") because its attributes cannot
+            * ("Service", note the lack of "s") because its attributes cannot
             * be retrieved in constant time (they have variable size) and thus
             * they must be stored in Service.
             * 
@@ -83,7 +83,9 @@ namespace ROADEF11
              */
             Services ( const Machines& machines,
                        const std::vector<int>& values )
-                : _machines ( machines ), _values ( values ), _definitionSize ( 1 )
+                : _machines ( machines ),
+                  _values ( values ),
+                  _definitionSize ( 1 )
             {
                 // Services are parsed once into individual Service's since they
                 // haven't a fixed size and they cannot be read in constant time.
@@ -103,7 +105,9 @@ namespace ROADEF11
                     boost::shared_ptr<const Service> servicePtr;
              
                     servicePtr.reset
-                            (  new Service ( serviceId++, minSpread, it+2, it+2+numDeps ) );
+                    (
+                      new Service ( serviceId++, minSpread, it+2, it+2+numDeps )
+                    );
                     
                     _services.push_back (  servicePtr );
                     
@@ -127,7 +131,6 @@ namespace ROADEF11
              * @name Methods related to a single service
              */
             ///@{
-            
             /**
              * Returns a human-readable representation of a service.
              * 
@@ -207,9 +210,8 @@ namespace ROADEF11
              * @name Service's index management
              */
             ///@{               
-
             /**
-             * According to ROADEF's format, where does
+             * According to ROADEF's format, where
              * this item's definition start.
              * 
              * @return Index of the start of definition.

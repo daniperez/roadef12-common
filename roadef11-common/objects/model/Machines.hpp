@@ -48,7 +48,8 @@ namespace ROADEF11
             /**
              * Constructor.
              */
-            Machines ( const Resources& resources, const std::vector<int>& values )
+            Machines
+              ( const Resources& resources, const std::vector<int>& values )
                 : _resources ( resources ), _values (values)
             {
             }
@@ -69,7 +70,6 @@ namespace ROADEF11
              * @name Methods related to a single machine
              */
             ///@{
-
             /**
              * Machine's neighborhood.
              * 
@@ -100,7 +100,6 @@ namespace ROADEF11
              * @name Methods related to a single machine, per resource
              */
             ///@{                
-
             /**
              * Returns the machine's capacity of a given resource.
              * 
@@ -246,9 +245,8 @@ namespace ROADEF11
              * @name Machine's index management
              */
             ///@{ 
-                
             /**
-             * According to ROADEF's format, where does
+             * According to ROADEF's format, where
              * this item's definition start.
              * 
              * @return Index of the start of definition.

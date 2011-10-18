@@ -40,7 +40,7 @@
 namespace ROADEF11
 {
     /**
-     * Input parameters.
+     * Input parameters describing the problem.
      * 
      * @author daniperez
      */

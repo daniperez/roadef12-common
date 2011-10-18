@@ -69,7 +69,8 @@ namespace ROADEF11
                 std::string output;
                                 
                 output += "    Balance costs (" ;
-                output += boost::lexical_cast<std::string> ( getNumObjectiveBalance() ) ;
+                output += boost::lexical_cast<std::string>
+                            ( getNumObjectiveBalance() ) ;
                 output += ")" ;
                 output += "\n";
                 
@@ -121,7 +122,6 @@ namespace ROADEF11
              * @name Objective balance
              */
             ///@{
-                
             /**
              * Returns the number of objective balance constraints.
              *
@@ -203,7 +203,8 @@ namespace ROADEF11
                         << boost::lexical_cast<std::string>( balanceId )
                         << std::string ( " doesn't exist. " )
                         << std::string ( "Valid id's go from 0 to " )
-                        << boost::lexical_cast<std::string> ( getNumObjectiveBalance() - 1 ) ;
+                        << boost::lexical_cast<std::string> (
+                              getNumObjectiveBalance() - 1 ) ;
                     
                     return false;
                 }
@@ -219,7 +220,6 @@ namespace ROADEF11
              * @name Cost weights
              */
             ///@{
-            
             /**
              * Returns the weight of the process move in the cost
              * function, from 0 to 100.
@@ -288,9 +288,8 @@ namespace ROADEF11
              * @name Process' index management
              */
             ///@{ 
-                
             /**
-             * According to ROADEF's format, where does
+             * According to ROADEF's format, where
              * this item's definition start.
              * 
              * @return Index of the start of definition.

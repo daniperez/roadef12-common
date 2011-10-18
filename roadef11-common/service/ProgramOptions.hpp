@@ -198,7 +198,7 @@ namespace ROADEF11
          */
         static boost::program_options::options_description
         createCommandLineOptions ( ROADEF11::ServiceInput& input )
-        throw ( ROADEF11::InvalidParametersException )
+          throw ( ROADEF11::InvalidParametersException )
         {
             boost::program_options::options_description
                 genericOptionsDesc ( "Generic options" );

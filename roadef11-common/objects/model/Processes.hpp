@@ -75,7 +75,6 @@ namespace ROADEF11
              * @name Methods related to a single process
              */
             ///@{                
-            
             /**
              * Returns the service this process belongs to.
              * 
@@ -103,7 +102,6 @@ namespace ROADEF11
              * @name Methods related to a single process, per resource
              */
             ///@{                
-            
             /**
              * Returns the requirements of the given resource for
              * the given process.
@@ -190,9 +188,8 @@ namespace ROADEF11
              * @name Process' index management
              */
             ///@{ 
-                
             /**
-             * According to ROADEF's format, where does
+             * According to ROADEF's format, where
              * this item's definition start.
              * 
              * @return Index of the start of definition.
