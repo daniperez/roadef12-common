@@ -278,7 +278,7 @@ namespace ROADEF11
         private:
              
              // WARNING: this must be declared before options
-             std::vector<int>                    _parametersArray;
+             std::vector<int>                   _parametersArray;
              
         public:
 
