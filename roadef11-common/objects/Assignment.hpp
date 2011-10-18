@@ -51,8 +51,7 @@ namespace ROADEF11
      * (processes per machine, per service,...).
      *
      * @author daniperez
-     * @todo   Use other values for the size of the array or even
-     *         other containers.
+     * @todo   Adjust the size of the arrays (using powers of 2 so far)
      */
     class Assignment
     {   
@@ -227,6 +226,7 @@ namespace ROADEF11
              */
             void move ( uint process, uint newMachine )
             {
+                // TODO
             }
             ///@}
 

@@ -107,7 +107,7 @@ namespace ROADEF11
              * @throw ParseException if the input files have wrong format.
              */
             Service ( const ROADEF11::ServiceInput& input )
-            throw ( ROADEF11::IOException, ROADEF11::ParseException )
+              throw ( ROADEF11::IOException, ROADEF11::ParseException )
                 : options  ( parseInput ( input ) ),
                   params   ( _parametersArray ),
                   firstAssignment
@@ -186,7 +186,8 @@ namespace ROADEF11
                 vector<int> new_assignments;
 
                 FileParser::parseVector ( options.parameters.c_str(), model );
-                FileParser::parseVector ( options.referenceSolution.c_str(), initial_assignments );
+                FileParser::parseVector ( options.referenceSolution.c_str(),
+                                          initial_assignments );
                 FileParser::parseVector ( options.solution.c_str(), new_assignments );
 
                 DataParser data(model,

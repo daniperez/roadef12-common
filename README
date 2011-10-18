@@ -15,5 +15,5 @@ In summary, the steps shown in ExampleMain.cpp are:
        to the executable in ProgramOptions. "firstAssignment" contains
        the initial assignment of processes to machines.
 
-The only dependencies of the library are the STL and Boost's shared_ptr
-and foreach.
+The only dependencies of the library are the STL and Boost's shared_ptr,
+lexical_cast and foreach.

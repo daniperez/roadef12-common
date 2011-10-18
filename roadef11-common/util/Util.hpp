@@ -35,13 +35,6 @@
 #include <time.h>
 #include <unordered_map>
 ///////////////////////////////////////////////////////////////////////////
-// Linux extensions
-// TODO: this shouldn't appear in headers...
-//#include "roadef11-common/config.h"
-#if UNIX
-#include <execinfo.h>
-#endif
-///////////////////////////////////////////////////////////////////////////
 
 /**
  * Like assert(3) but throws an std::logic_error instead.

@@ -70,7 +70,6 @@ namespace ROADEF11
              * @name Methods related to a single resource
              */
             ///@{                
-            
             /**
              * Says if the given resource is transient or not.
              * 
@@ -139,9 +138,8 @@ namespace ROADEF11
              * @name Resource's index management
              */
             ///@{ 
-                            
             /**
-             * According to ROADEF's format, where does
+             * According to ROADEF's format, where
              * this item's definition start.
              * 
              * @return Index of the start of definition.

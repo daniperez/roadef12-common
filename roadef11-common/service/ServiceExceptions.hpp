@@ -22,14 +22,12 @@
 // 
 #ifndef __roadef11_SERVICE_EXCEPTIONS_HPP
 #define __roadef11_SERVICE_EXCEPTIONS_HPP
-
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <stdexcept>
 ///////////////////////////////////////////////////////////////////////////
 namespace ROADEF11 
 {
-
     /**
      * When an input parameter is not valid.
      *
@@ -92,7 +90,7 @@ namespace ROADEF11
     
     
     /**
-     * If launched at command-line processing, the optimization
+     * If launched while command-line is processed, the optimization
      * is not launched.
      *
      * @author daniperez
