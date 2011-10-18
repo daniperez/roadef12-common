@@ -8,6 +8,8 @@ dependencies of the library are the STL and Boost's shared_ptr and foreach.
 
 The author is neither affiliated nor endorsed by Google or ROADEF.
 
+More info about the challenge can be found [here](http://challenge.roadef.org/2012).
+
 How to use it 
 =============
 
@@ -29,4 +31,4 @@ The only dependencies of the library are the STL and Boost's shared_ptr,
 lexical_cast and foreach.
 
 The library can be checked out in your sources or you can use the
-packages in [download section](/daniperez/roadef11-common/download).
+packages in [download section](/daniperez/roadef11-common/downloads).
