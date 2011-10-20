@@ -31,7 +31,7 @@ set_target_properties ( Main
 # -------------------------------------------------------------------
 # i) Example instance
 solve_instance (
-  "$<TARGET_FILE:Main>"
+  "Main"
   "example" # You can do 'make example' to solve the example instance
   "${DATA_DIR}/data_example/model_example.txt"
   "${DATA_DIR}/data_example/initial_solution_example.txt"
@@ -41,7 +41,7 @@ solve_instance (
 # ii) A1 instances
 foreach ( i RANGE 1 5 )
   solve_instance (
-    "$<TARGET_FILE:Main>"
+    "Main"
     "a1-${i}" # You can do 'make a1-[1-4]' to solve a single A1 instance 
     "${DATA_DIR}/data_a1/model_a1_${i}.txt"
     "${DATA_DIR}/data_a1/assignment_a1_${i}.txt"
@@ -55,6 +55,6 @@ endforeach ()
 add_custom_target(
                   check
                   COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
-                  DEPENDS Main
+                  DEPENDS Main ROADEF11COMMON_checker
                  )
 
