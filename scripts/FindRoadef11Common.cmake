@@ -50,15 +50,16 @@ endmacro ()
 #
 # solve_instance - Solves an instance and checks the solution. 
 #
-#  solve_instance ( NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS ) 
+#  solve_instance ( TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS ) 
 #
-# TARGET is the executable to execute. CHECKER_TARGET is the executable of
-# the checker. NAME is the name of the instance to solve. MODEL is the
-# parameters of the problem as per ROADEF's specs.
+# TARGET is the executable to execute. NAME is the name of the instance
+# to solve. MODEL is the parameters of the problem as per ROADEF's specs.
 # INITIAL_SOLUTION is the initial feasible solution. SOLUTION is the output
 # file to write. Finally, CMD_ARGS are other arguments to append to TARGET call.
 #
-macro ( solve_instance TARGET CHECKER_TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
+macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
+
+    find_program ( ROADEF11_COMMON_checker "roadef11-checker" ${PROJECT_BINARY_DIR} )
 
     add_test ( NAME "testsuite-${NAME}-solution" 
                COMMAND "${TARGET}"
@@ -68,7 +69,7 @@ macro ( solve_instance TARGET CHECKER_TARGET NAME MODEL INITIAL_SOLUTION SOLUTIO
                        "${CMD_ARGS}" )
 
     add_test ( NAME "testsuite-${NAME}-solution-check" 
-               COMMAND "${CHECKER_TARGET}"
+               COMMAND "${ROADEF11_COMMON_checker}"
                        "${MODEL}"
                        "${INITIAL_SOLUTION}"
                        "${SOLUTION}" )
@@ -82,8 +83,29 @@ macro ( solve_instance TARGET CHECKER_TARGET NAME MODEL INITIAL_SOLUTION SOLUTIO
                        -R "testsuite-${NAME}-solution"
                        -E "testsuite-${NAME}-solution-check"
                DEPENDS MainTestSuite ExampleMain )
+
 endmacro ()
 
-find_path ( ROADEF11COMMON_INCLUDE_DIR "Service.hpp" PATHS "roadef11-common/service/" NO_DEFAULT_PATH )
+# -------------------------------------------------------------------
+# MAIN
+# -------------------------------------------------------------------
+find_package ( Boost 1.44.0
+               COMPONENTS program_options unit_test_framework )
 
-mark_as_advanced ( ROADEF11COMMON_INCLUDE_DIR )
+if ( Boost_FOUND)
+
+    include_directories ( ${Boost_INCLUDE_DIRS} )
+
+    include ( add_test_suite )
+
+    set ( DATA_DIR "${CMAKE_SOURCE_DIR}/roadef11-material/data/" )
+    enable_testing() 
+
+    find_path ( ROADEF11COMMON_INCLUDE_DIR "Service.hpp" PATHS "roadef11-common/service/" NO_DEFAULT_PATH )
+
+    mark_as_advanced ( ROADEF11COMMON_INCLUDE_DIR )
+
+else ()
+
+endif ()
+

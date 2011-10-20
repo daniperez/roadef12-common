@@ -37,24 +37,6 @@ set ( CPACK_RPM_PACKAGE_REQUIRES "boost >= 1.40.0, boost-devel >= 1.40.0" )
 set ( CPACK_RPM_CHANGELOG_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ChangeLog" )
 set ( CPACK_GENERATOR "ZIP;RPM" )
 
-install( DIRECTORY roadef11-common
-         DESTINATION include/
-         FILES_MATCHING PATTERN *.hpp
-       )
-install( DIRECTORY roadef11-material/
-         DESTINATION share/${PROJECT_NAME}/material
-         FILES_MATCHING PATTERN *.txt
-       )
-
-install( FILES scripts/FindRoadef11Common.cmake
-         DESTINATION share/${PROJECT_NAME}/cmake/ )
-
-install( FILES example/ExampleMain.cpp 
-         DESTINATION share/${PROJECT_NAME}/example/ )
-
-install( FILES README COPYING ChangeLog
-         DESTINATION share/${PROJECT_NAME}/ )
-
 # -------------------------------------------------------------------
 # DEPENDENCIES 
 # -------------------------------------------------------------------
@@ -88,7 +70,7 @@ include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
 # -------------------------------------------------------------------
 # SUBDIRS
 # -------------------------------------------------------------------
-add_subdirectory ( ${PROJECT_NAME} )
+add_subdirectory ( ${PROJECT_NAME} example )
 
 # -------------------------------------------------------------------
 # TARGET : checker
@@ -97,18 +79,9 @@ file ( GLOB_RECURSE
        checker_SOURCES
        "roadef11-material/solution_checker/solution_checker.cc" )
 add_library ( checkerlib ${checker_SOURCES} )
-add_executable ( checker
+add_executable ( roadef11-checker
                  "roadef11-material/solution_checker/solution_checker_run.cc" )
-target_link_libraries ( checker checkerlib ) 
-
-# -------------------------------------------------------------------
-# TARGET : ExampleMain 
-# -------------------------------------------------------------------
-add_executable ( ExampleMain example/ExampleMain.cpp )
-target_link_libraries ( ExampleMain ${Boost_LIBRARIES} )
-set_target_properties ( ExampleMain
-                        PROPERTIES COMPILE_FLAGS
-                        "-std=c++0x -Wall -Werror" )
+target_link_libraries ( roadef11-checker checkerlib )
 
 # -------------------------------------------------------------------
 # TARGET : tests 
@@ -131,41 +104,31 @@ if ( Boost_FOUND )
 
     target_link_libraries ( MainTestSuite ${Boost_LIBRARIES} )
 
-    # ii) Example instances
-    solve_instance (
-      "$<TARGET_FILE:ExampleMain>"
-      "$<TARGET_FILE:checker>"
-      "example"
-      "${DATA_DIR}/data_example/model_example.txt"
-      "${DATA_DIR}/data_example/initial_solution_example.txt"
-      "${DATA_DIR}/data_example/initial_solution_example.txt"
-      "-u" )
-
-    # iii) A1 instances
-    foreach ( i RANGE 1 5 )
-      solve_instance (
-        "$<TARGET_FILE:ExampleMain>"
-        "$<TARGET_FILE:checker>"
-        "a1-${i}"
-        "${DATA_DIR}/data_a1/model_a1_${i}.txt"
-        "${DATA_DIR}/data_a1/assignment_a1_${i}.txt"
-        "${CMAKE_BINARY_DIR}/solution_a1_${i}.txt"
-        "" )
-    endforeach ()
-
-    # iv) Doxgygen run (just seeking for missing documentation)
+    # ii) Doxgygen run (just seeking for missing documentation)
     add_doxygen_test_suite ()
 
-    # Don't forget to add the test suite to the DEPENDS argument list.
-    # a1-1,a1-2,... targets write log messages whereas "check" doesn't
-    # (only in case of failure)
-    add_custom_target(
-                      check
-                      COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
-                      DEPENDS ExampleMain MainTestSuite checker
-                     )
 endif ()
 
 # Keep this last.
+install( DIRECTORY roadef11-common
+         DESTINATION include/
+         FILES_MATCHING PATTERN *.hpp
+       )
+install( DIRECTORY roadef11-material/
+         DESTINATION share/${PROJECT_NAME}/material
+         FILES_MATCHING PATTERN *.txt
+       )
+
+install( FILES scripts/FindRoadef11Common.cmake
+         DESTINATION share/${PROJECT_NAME}/cmake/ )
+
+install( FILES example/ExampleMain.cpp 
+         DESTINATION share/${PROJECT_NAME}/example/ )
+
+install( FILES README COPYING ChangeLog
+         DESTINATION share/${PROJECT_NAME}/ )
+
+install ( TARGETS roadef11-checker DESTINATION bin )
+
 include ( CPack )
 
