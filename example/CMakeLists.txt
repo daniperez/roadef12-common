@@ -6,10 +6,7 @@ set ( Roadef11CommonFinderLocation "${PROJECT_SOURCE_DIR}/scripts/" )
 # -------------------------------------------------------------------
 # DEPENDENCIES 
 # -------------------------------------------------------------------
-# CMake scripts path
 set ( CMAKE_MODULE_PATH ${Roadef11CommonFinderLocation} )
-
-# * ROADEF11-Common
 find_package ( Roadef11Common )
 
 # -------------------------------------------------------------------

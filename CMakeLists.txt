@@ -74,20 +74,6 @@ add_executable ( ROADEF11COMMON_checker
                  "roadef11-material/solution_checker/solution_checker_run.cc" )
 target_link_libraries ( ROADEF11COMMON_checker checkerlib )
 
-set_target_properties ( ROADEF11COMMON_checker PROPERTIES
-                        PUBLIC_HEADER "roadef11-common/service/Service.hpp" )
-
-install ( TARGETS ROADEF11COMMON_checker DESTINATION bin EXPORT checker 
-          RUNTIME       DESTINATION bin/
-          PUBLIC_HEADER DESTINATION include/
-          )
-
-# Deployed 
-install ( EXPORT checker DESTINATION share/${PROJECT_NAME}/cmake/ )
-# Local
-#set ( ROADEF11COMMON_checker_DIR ${PROJECT_BINARY_DIR}/CMakeFiles/Export/share/${PROJECT_NAME}/cmake/ )
-#export ( TARGETS ROADEF11COMMON_checker FILE ROADEF11COMMON_checkerConfig.cmake )
-
 # The only purpose of this find_package is to load a pair of macros we
 # put in FindRoadef11Common.cmake. Has to go after checker definition
 # because we define a macro making use of it.
@@ -141,6 +127,15 @@ install( FILES example/ExampleMain.cpp
 
 install( FILES README COPYING ChangeLog
          DESTINATION share/${PROJECT_NAME}/ )
+
+set_target_properties ( ROADEF11COMMON_checker PROPERTIES
+                        PUBLIC_HEADER "roadef11-common/service/Service.hpp" )
+
+install ( TARGETS ROADEF11COMMON_checker DESTINATION bin EXPORT checker 
+          RUNTIME       DESTINATION bin/
+          PUBLIC_HEADER DESTINATION include/
+          )
+install ( EXPORT checker DESTINATION share/${PROJECT_NAME}/cmake/ )
 
 # -------------------------------------------------------------------
 # SUBDIRS
