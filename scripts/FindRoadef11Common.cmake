@@ -22,29 +22,6 @@
 #
 
 # -------------------------------------------------------------------
-# add_doxygen_test_suite
-# -------------------------------------------------------------------
-#
-# add_doxygen_test_suite - Adds a test that checks that doxygen is well formed. 
-#
-#  add_doxygen_test_suite () 
-#
-macro ( add_doxygen_test_suite )
-
-    if ( UNIX )
-
-        add_test (
-                   NAME "DoxygenErrors" 
-                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-                   COMMAND "${CMAKE_SOURCE_DIR}/scripts/doxytest.sh"
-                           "${DOXYGEN_EXECUTABLE}"
-                           "${DOXYFILE}"
-                 )
-    endif ()
-
-endmacro ()
-
-# -------------------------------------------------------------------
 # solve_instance 
 # -------------------------------------------------------------------
 #
