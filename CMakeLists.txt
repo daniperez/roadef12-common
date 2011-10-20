@@ -74,11 +74,6 @@ add_executable ( ROADEF11COMMON_checker
                  "roadef11-material/solution_checker/solution_checker_run.cc" )
 target_link_libraries ( ROADEF11COMMON_checker checkerlib )
 
-# The only purpose of this find_package is to load a pair of macros we
-# put in FindRoadef11Common.cmake. Has to go after checker definition
-# because we define a macro making use of it.
-find_package ( Roadef11Common )
-
 # -------------------------------------------------------------------
 # TARGET : tests 
 # -------------------------------------------------------------------
@@ -101,7 +96,13 @@ if ( Boost_FOUND )
     target_link_libraries ( MainTestSuite ${Boost_LIBRARIES} )
 
     # ii) Doxgygen run (just seeking for missing documentation)
-    add_doxygen_test_suite ()
+    add_test (
+               NAME "DoxygenErrors" 
+               WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+               COMMAND "${CMAKE_SOURCE_DIR}/scripts/doxytest.sh"
+                       "${DOXYGEN_EXECUTABLE}"
+                       "${DOXYFILE}"
+             )
 
 endif ()
 
