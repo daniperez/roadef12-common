@@ -44,7 +44,7 @@ macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
                        "${CMD_ARGS}" )
 
     add_test ( NAME "testsuite-${NAME}-solution-check" 
-               COMMAND "$<TARGET_FILE:ROADEF11COMMON_checker>"
+               COMMAND "$<TARGET_FILE:roadef11-checker>"
                        "${MODEL}"
                        "${INITIAL_SOLUTION}"
                        "${SOLUTION}" )
@@ -57,7 +57,7 @@ macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
                        -V
                        -R "testsuite-${NAME}-solution"
                        -E "testsuite-${NAME}-solution-check"
-               DEPENDS ${TARGET} ROADEF11COMMON_checker )
+               DEPENDS ${TARGET} roadef11-checker )
 
 endmacro ()
 
@@ -65,9 +65,9 @@ endmacro ()
 # MAIN
 # -------------------------------------------------------------------
 
-# Where using this file in the project compilation also but
-# ROADEF11COMMON_checker package cannot be found in that case.
-find_package ( ROADEF11COMMON_checker QUIET )
+# QUIET used here because find_package won't find a package with such a name
+# when compiling the example/ in roadef11-common's source tree.
+find_package ( roadef11-checker QUIET )
 
 find_package ( Boost 1.44.0
                COMPONENTS program_options unit_test_framework )

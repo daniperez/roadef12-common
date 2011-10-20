@@ -70,9 +70,9 @@ file ( GLOB_RECURSE
        checker_SOURCES
        "roadef11-material/solution_checker/solution_checker.cc" )
 add_library ( checkerlib ${checker_SOURCES} )
-add_executable ( ROADEF11COMMON_checker
+add_executable ( roadef11-checker
                  "roadef11-material/solution_checker/solution_checker_run.cc" )
-target_link_libraries ( ROADEF11COMMON_checker checkerlib )
+target_link_libraries ( roadef11-checker checkerlib )
 
 # -------------------------------------------------------------------
 # TARGET : tests 
@@ -110,33 +110,36 @@ endif ()
 # INSTALLATIONS
 # -------------------------------------------------------------------
 
-#install( DIRECTORY roadef11-common
-#         DESTINATION include/
-#         FILES_MATCHING PATTERN *.hpp
-#       )
-
+# Material
 install( DIRECTORY roadef11-material/
          DESTINATION share/${PROJECT_NAME}/material
          FILES_MATCHING PATTERN *.txt
        )
 
+# CMake
 install( FILES scripts/FindRoadef11Common.cmake
          DESTINATION share/${PROJECT_NAME}/cmake/ )
 
-install( FILES example/ExampleMain.cpp 
+# Example
+install( FILES example/ExampleMain.cpp  example/CMakeLists.txt
          DESTINATION share/${PROJECT_NAME}/example/ )
 
+# Misc
 install( FILES README COPYING ChangeLog
          DESTINATION share/${PROJECT_NAME}/ )
 
-set_target_properties ( ROADEF11COMMON_checker PROPERTIES
+# Main target: checker
+# TODO: add the other headers and get rid of find_path in
+#       FindRoadef11Common.cmake. 
+set_target_properties ( roadef11-checker PROPERTIES
                         PUBLIC_HEADER "roadef11-common/service/Service.hpp" )
 
-install ( TARGETS ROADEF11COMMON_checker DESTINATION bin EXPORT checker 
+install ( TARGETS roadef11-checker DESTINATION bin EXPORT roadef11-checker 
           RUNTIME       DESTINATION bin/
           PUBLIC_HEADER DESTINATION include/
           )
-install ( EXPORT checker DESTINATION share/${PROJECT_NAME}/cmake/ )
+
+install ( EXPORT roadef11-checker DESTINATION share/${PROJECT_NAME}/cmake/ )
 
 # -------------------------------------------------------------------
 # SUBDIRS
