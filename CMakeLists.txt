@@ -58,20 +58,10 @@ set ( CPACK_GENERATOR "ZIP;RPM" )
   install ( DIRECTORY ${DOXYFILE_OUTPUT_DIR}/
             DESTINATION share/${PROJECT_NAME}/doc OPTIONAL )
 
-# * The only purpose of this find_package is to load a pair of macros we
-#   put in FindRoadef11Common.cmake
-find_package ( Roadef11Common )
-
 # -------------------------------------------------------------------
 # HEADERS 
 # -------------------------------------------------------------------
 include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
-
-# -------------------------------------------------------------------
-# SUBDIRS
-# -------------------------------------------------------------------
-add_subdirectory ( ${PROJECT_NAME} )
-add_subdirectory ( example )
 
 # -------------------------------------------------------------------
 # TARGET : checker
@@ -80,9 +70,28 @@ file ( GLOB_RECURSE
        checker_SOURCES
        "roadef11-material/solution_checker/solution_checker.cc" )
 add_library ( checkerlib ${checker_SOURCES} )
-add_executable ( roadef11-checker
+add_executable ( ROADEF11COMMON_checker
                  "roadef11-material/solution_checker/solution_checker_run.cc" )
-target_link_libraries ( roadef11-checker checkerlib )
+target_link_libraries ( ROADEF11COMMON_checker checkerlib )
+
+set_target_properties ( ROADEF11COMMON_checker PROPERTIES
+                        PUBLIC_HEADER "roadef11-common/service/Service.hpp" )
+
+install ( TARGETS ROADEF11COMMON_checker DESTINATION bin EXPORT checker 
+          RUNTIME       DESTINATION bin/
+          PUBLIC_HEADER DESTINATION include/
+          )
+
+# Deployed 
+install ( EXPORT checker DESTINATION share/${PROJECT_NAME}/cmake/ )
+# Local
+#set ( ROADEF11COMMON_checker_DIR ${PROJECT_BINARY_DIR}/CMakeFiles/Export/share/${PROJECT_NAME}/cmake/ )
+#export ( TARGETS ROADEF11COMMON_checker FILE ROADEF11COMMON_checkerConfig.cmake )
+
+# The only purpose of this find_package is to load a pair of macros we
+# put in FindRoadef11Common.cmake. Has to go after checker definition
+# because we define a macro making use of it.
+find_package ( Roadef11Common )
 
 # -------------------------------------------------------------------
 # TARGET : tests 
@@ -110,11 +119,15 @@ if ( Boost_FOUND )
 
 endif ()
 
-# Keep this last.
-install( DIRECTORY roadef11-common
-         DESTINATION include/
-         FILES_MATCHING PATTERN *.hpp
-       )
+# -------------------------------------------------------------------
+# INSTALLATIONS
+# -------------------------------------------------------------------
+
+#install( DIRECTORY roadef11-common
+#         DESTINATION include/
+#         FILES_MATCHING PATTERN *.hpp
+#       )
+
 install( DIRECTORY roadef11-material/
          DESTINATION share/${PROJECT_NAME}/material
          FILES_MATCHING PATTERN *.txt
@@ -129,7 +142,11 @@ install( FILES example/ExampleMain.cpp
 install( FILES README COPYING ChangeLog
          DESTINATION share/${PROJECT_NAME}/ )
 
-install ( TARGETS roadef11-checker DESTINATION bin )
+# -------------------------------------------------------------------
+# SUBDIRS
+# -------------------------------------------------------------------
+add_subdirectory ( ${PROJECT_NAME} )
+add_subdirectory ( example )
 
 include ( CPack )
 
