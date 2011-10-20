@@ -70,7 +70,8 @@ include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
 # -------------------------------------------------------------------
 # SUBDIRS
 # -------------------------------------------------------------------
-add_subdirectory ( ${PROJECT_NAME} example )
+add_subdirectory ( ${PROJECT_NAME} )
+add_subdirectory ( example )
 
 # -------------------------------------------------------------------
 # TARGET : checker

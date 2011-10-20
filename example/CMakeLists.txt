@@ -1,5 +1,6 @@
 cmake_minimum_required ( VERSION 2.6 )
 
+# Set this to the location of FindRoadef11Common.cmake
 set ( Roadef11CommonFinderLocation "${PROJECT_SOURCE_DIR}/scripts/" )
 
 # -------------------------------------------------------------------
@@ -56,5 +57,4 @@ add_custom_target(
                   COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
                   DEPENDS Main
                  )
-endif ()
 
