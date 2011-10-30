@@ -125,12 +125,13 @@ install( DIRECTORY roadef11-material/
 install( FILES example/ExampleMain.cpp  example/CMakeLists.txt
          DESTINATION share/${PROJECT_NAME}/example/ )
 
-# CMake script
+# CMake scripts
 configure_file (
   "scripts/Roadef11CommonConfig.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/Roadef11CommonConfig.cmake" @ONLY
 )
 install ( FILES "${CMAKE_CURRENT_BINARY_DIR}/Roadef11CommonConfig.cmake"
+                "scripts/add_test_suite.cmake"
                 DESTINATION share/${PROJECT_NAME}/cmake/ )
 
 # Misc
