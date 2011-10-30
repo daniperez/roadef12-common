@@ -1,18 +1,22 @@
 cmake_minimum_required ( VERSION 2.6 )
 
-# Set this to the location of FindRoadef11Common.cmake
-set ( Roadef11CommonFinderLocation "${PROJECT_SOURCE_DIR}/scripts/" )
+# This points to the location of Roadef11 macros: 
+set ( Roadef11CommonMacroLocation "${CMAKE_SOURCE_DIR}/scripts/" )
+set ( CMAKE_MODULE_PATH ${Roadef11CommonMacroLocation} )
 
 # -------------------------------------------------------------------
 # DEPENDENCIES 
 # -------------------------------------------------------------------
-set ( CMAKE_MODULE_PATH ${Roadef11CommonFinderLocation} )
+# CMAKE_BINARY_DIR used here to allow compiling the example within
+# Roadef11Common source tree.
+set ( Roadef11Common_DIR ${CMAKE_BINARY_DIR} )
 find_package ( Roadef11Common )
 
 # -------------------------------------------------------------------
 # HEADERS 
 # -------------------------------------------------------------------
-include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
+include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
+                             ${Roadef11Common_INCLUDE_DIRS} )
 
 # -------------------------------------------------------------------
 # TARGET : Main 

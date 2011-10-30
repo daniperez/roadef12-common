@@ -21,6 +21,21 @@
 # THE SOFTWARE.
 #
 
+# ###################################################################
+# -------------------------------------------------------------------
+# Roadef11 Common Finder
+# -------------------------------------------------------------------
+#
+# Dependencies are looked up and Roadef11Common_INCLUDE_DIRS variable
+# pointing to the folder containting the headers is set.
+# Roadef11Common_FOUND is set to true if the finder succeeded.
+# Roadef11Checker points to the executable of the ROADEF checker.
+# 
+# We also define solve_instance macro, easing the task of testing 
+# the data instances against your code.
+#
+# ###################################################################
+
 # -------------------------------------------------------------------
 # solve_instance 
 # -------------------------------------------------------------------
@@ -29,10 +44,11 @@
 #
 #  solve_instance ( TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS ) 
 #
-# TARGET is the executable to execute. NAME is the name of the instance
-# to solve. MODEL is the parameters of the problem as per ROADEF's specs.
-# INITIAL_SOLUTION is the initial feasible solution. SOLUTION is the output
-# file to write. Finally, CMD_ARGS are other arguments to append to TARGET call.
+# TARGET is the executable to execute (your application). NAME is the name of
+# the instance to solve. MODEL is the parameters of the problem as per ROADEF's
+# specs. INITIAL_SOLUTION is the initial feasible solution. SOLUTION is the
+# output file to write. Finally, CMD_ARGS are other arguments to append to
+# TARGET call.
 #
 macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
 
@@ -65,9 +81,10 @@ endmacro ()
 # MAIN
 # -------------------------------------------------------------------
 
-# QUIET used here because find_package won't find a package with such a name
-# when compiling the example/ in roadef11-common's source tree.
-find_package ( roadef11-checker QUIET )
+# OPTIONAL used here because include won't find a package with such a name
+# when compiling example/ folder in roadef11-common's source tree.
+get_filename_component(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include( ${SELF_DIR}/Roadef11Checker.cmake OPTIONAL )
 
 find_package ( Boost 1.44.0
                COMPONENTS program_options unit_test_framework )
@@ -81,9 +98,13 @@ if ( Boost_FOUND)
     set ( DATA_DIR "${CMAKE_SOURCE_DIR}/roadef11-material/data/" )
     enable_testing() 
 
-    find_path ( ROADEF11COMMON_INCLUDE_DIR "Service.hpp" PATHS "roadef11-common/service/" NO_DEFAULT_PATH )
+    find_path ( Roadef11Common_INCLUDE_DIRS "roadef11-common/service/Service.hpp"
+                PATHS "${CMAKE_SOURCE_DIR}"
+                NO_DEFAULT_PATH )
 
-    mark_as_advanced ( ROADEF11COMMON_INCLUDE_DIR )
+    mark_as_advanced ( Roadef11Common_INCLUDE_DIRS )
+
+    set ( Roadef11Common_FOUND true )
 
 else ()
 

@@ -110,36 +110,44 @@ endif ()
 # INSTALLATIONS
 # -------------------------------------------------------------------
 
+# Headers
+install ( DIRECTORY roadef11-common
+          DESTINATION include
+          FILES_MATCHING PATTERN *.hpp )
+
 # Material
 install( DIRECTORY roadef11-material/
          DESTINATION share/${PROJECT_NAME}/material
          FILES_MATCHING PATTERN *.txt
        )
 
-# CMake
-install( FILES scripts/FindRoadef11Common.cmake
-         DESTINATION share/${PROJECT_NAME}/cmake/ )
-
 # Example
 install( FILES example/ExampleMain.cpp  example/CMakeLists.txt
          DESTINATION share/${PROJECT_NAME}/example/ )
+
+# CMake script
+configure_file (
+  "scripts/Roadef11CommonConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/Roadef11CommonConfig.cmake" @ONLY
+)
+install ( FILES "${CMAKE_CURRENT_BINARY_DIR}/Roadef11CommonConfig.cmake"
+                DESTINATION share/${PROJECT_NAME}/cmake/ )
 
 # Misc
 install( FILES README COPYING ChangeLog
          DESTINATION share/${PROJECT_NAME}/ )
 
 # Main target: checker
-# TODO: add the other headers and get rid of find_path in
-#       FindRoadef11Common.cmake. 
-set_target_properties ( roadef11-checker PROPERTIES
-                        PUBLIC_HEADER "roadef11-common/service/Service.hpp" )
+# It's exported by means of CMake's export interface (i.e.
+# we can easily import the target in other projects).
+install ( TARGETS roadef11-checker
+          EXPORT        Roadef11Checker 
+          RUNTIME       DESTINATION bin
+          PUBLIC_HEADER DESTINATION include
+          LIBRARY       DESTINATION lib
+        )
 
-install ( TARGETS roadef11-checker DESTINATION bin EXPORT roadef11-checker 
-          RUNTIME       DESTINATION bin/
-          PUBLIC_HEADER DESTINATION include/
-          )
-
-install ( EXPORT roadef11-checker DESTINATION share/${PROJECT_NAME}/cmake/ )
+install ( EXPORT Roadef11Checker DESTINATION share/${PROJECT_NAME}/cmake/ )
 
 # -------------------------------------------------------------------
 # SUBDIRS
