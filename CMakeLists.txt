@@ -18,7 +18,7 @@ set ( CPACK_PACKAGE_VENDOR "daniperez" )
 set ( CPACK_PACKAGE_VERSION_MAJOR "${roadef11_VERSION_MAJOR}" )
 set ( CPACK_PACKAGE_VERSION_MINOR "${roadef11_VERSION_MINOR}" )
 set ( CPACK_PACKAGE_VERSION_PATCH "${roadef11_VERSION_PATCH}" )
-set ( CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_SOURCE_DIR}/README.md )
+set ( CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_SOURCE_DIR}/README )
 set ( CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING" )
 set ( CPACK_PACKAGE_FILE_NAME
       "${PROJECT_NAME}-${roadef11_VERSION_MAJOR}-${roadef11_VERSION_MINOR}-${roadef11_VERSION_PATCH}" )
@@ -36,24 +36,6 @@ set ( CPACK_RPM_PACKAGE_GROUP "Development/Libraries" )
 set ( CPACK_RPM_PACKAGE_REQUIRES "boost >= 1.40.0, boost-devel >= 1.40.0" )
 set ( CPACK_RPM_CHANGELOG_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ChangeLog" )
 set ( CPACK_GENERATOR "ZIP;RPM" )
-
-install( DIRECTORY roadef11-common
-         DESTINATION include/
-         FILES_MATCHING PATTERN *.hpp
-       )
-install( DIRECTORY roadef11-material/
-         DESTINATION share/${PROJECT_NAME}/material
-         FILES_MATCHING PATTERN *.txt
-       )
-
-install( FILES scripts/FindRoadef11Common.cmake
-         DESTINATION share/${PROJECT_NAME}/cmake/ )
-
-install( FILES example/ExampleMain.cpp 
-         DESTINATION share/${PROJECT_NAME}/example/ )
-
-install( FILES README.md COPYING ChangeLog
-         DESTINATION share/${PROJECT_NAME}/ )
 
 # -------------------------------------------------------------------
 # DEPENDENCIES 
@@ -76,19 +58,10 @@ install( FILES README.md COPYING ChangeLog
   install ( DIRECTORY ${DOXYFILE_OUTPUT_DIR}/
             DESTINATION share/${PROJECT_NAME}/doc OPTIONAL )
 
-# * The only purpose of this find_package is to load a pair of macros we
-#   put in FindRoadef11Common.cmake
-find_package ( Roadef11Common )
-
 # -------------------------------------------------------------------
 # HEADERS 
 # -------------------------------------------------------------------
 include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
-
-# -------------------------------------------------------------------
-# SUBDIRS
-# -------------------------------------------------------------------
-add_subdirectory ( ${PROJECT_NAME} )
 
 # -------------------------------------------------------------------
 # TARGET : checker
@@ -97,18 +70,9 @@ file ( GLOB_RECURSE
        checker_SOURCES
        "roadef11-material/solution_checker/solution_checker.cc" )
 add_library ( checkerlib ${checker_SOURCES} )
-add_executable ( checker
+add_executable ( roadef11-checker
                  "roadef11-material/solution_checker/solution_checker_run.cc" )
-target_link_libraries ( checker checkerlib ) 
-
-# -------------------------------------------------------------------
-# TARGET : ExampleMain 
-# -------------------------------------------------------------------
-add_executable ( ExampleMain example/ExampleMain.cpp )
-target_link_libraries ( ExampleMain ${Boost_LIBRARIES} )
-set_target_properties ( ExampleMain
-                        PROPERTIES COMPILE_FLAGS
-                        "-std=c++0x -Wall -Werror" )
+target_link_libraries ( roadef11-checker checkerlib )
 
 # -------------------------------------------------------------------
 # TARGET : tests 
@@ -131,41 +95,66 @@ if ( Boost_FOUND )
 
     target_link_libraries ( MainTestSuite ${Boost_LIBRARIES} )
 
-    # ii) Example instances
-    solve_instance (
-      "$<TARGET_FILE:ExampleMain>"
-      "$<TARGET_FILE:checker>"
-      "example"
-      "${DATA_DIR}/data_example/model_example.txt"
-      "${DATA_DIR}/data_example/initial_solution_example.txt"
-      "${DATA_DIR}/data_example/initial_solution_example.txt"
-      "-u" )
+    # ii) Doxgygen run (just seeking for missing documentation)
+    add_test (
+               NAME "DoxygenErrors" 
+               WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+               COMMAND "${CMAKE_SOURCE_DIR}/scripts/doxytest.sh"
+                       "${DOXYGEN_EXECUTABLE}"
+                       "${DOXYFILE}"
+             )
 
-    # iii) A1 instances
-    foreach ( i RANGE 1 5 )
-      solve_instance (
-        "$<TARGET_FILE:ExampleMain>"
-        "$<TARGET_FILE:checker>"
-        "a1-${i}"
-        "${DATA_DIR}/data_a1/model_a1_${i}.txt"
-        "${DATA_DIR}/data_a1/assignment_a1_${i}.txt"
-        "${CMAKE_BINARY_DIR}/solution_a1_${i}.txt"
-        "" )
-    endforeach ()
-
-    # iv) Doxgygen run (just seeking for missing documentation)
-    add_doxygen_test_suite ()
-
-    # Don't forget to add the test suite to the DEPENDS argument list.
-    # a1-1,a1-2,... targets write log messages whereas "check" doesn't
-    # (only in case of failure)
-    add_custom_target(
-                      check
-                      COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
-                      DEPENDS ExampleMain MainTestSuite checker
-                     )
 endif ()
 
-# Keep this last.
+# -------------------------------------------------------------------
+# INSTALLATIONS
+# -------------------------------------------------------------------
+
+# Headers
+install ( DIRECTORY roadef11-common
+          DESTINATION include
+          FILES_MATCHING PATTERN *.hpp )
+
+# Material
+install( DIRECTORY roadef11-material/
+         DESTINATION share/${PROJECT_NAME}/material
+         FILES_MATCHING PATTERN *.txt
+       )
+
+# Example
+install( FILES example/ExampleMain.cpp  example/CMakeLists.txt
+         DESTINATION share/${PROJECT_NAME}/example/ )
+
+# CMake scripts
+configure_file (
+  "scripts/Roadef11CommonConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/Roadef11CommonConfig.cmake" @ONLY
+)
+install ( FILES "${CMAKE_CURRENT_BINARY_DIR}/Roadef11CommonConfig.cmake"
+                "scripts/add_test_suite.cmake"
+                DESTINATION share/${PROJECT_NAME}/cmake/ )
+
+# Misc
+install( FILES README COPYING ChangeLog
+         DESTINATION share/${PROJECT_NAME}/ )
+
+# Main target: checker
+# It's exported by means of CMake's export interface (i.e.
+# we can easily import the target in other projects).
+install ( TARGETS roadef11-checker
+          EXPORT        Roadef11Checker 
+          RUNTIME       DESTINATION bin
+          PUBLIC_HEADER DESTINATION include
+          LIBRARY       DESTINATION lib
+        )
+
+install ( EXPORT Roadef11Checker DESTINATION share/${PROJECT_NAME}/cmake/ )
+
+# -------------------------------------------------------------------
+# SUBDIRS
+# -------------------------------------------------------------------
+add_subdirectory ( ${PROJECT_NAME} )
+add_subdirectory ( example )
+
 include ( CPack )
 
