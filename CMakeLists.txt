@@ -6,7 +6,7 @@ cmake_minimum_required ( VERSION 2.6 )
 project ( roadef11-common )
 set ( roadef11_VERSION_MAJOR 0 )
 set ( roadef11_VERSION_MINOR 2 )
-set ( roadef11_VERSION_PATCH 0 )
+set ( roadef11_VERSION_PATCH 1 )
 
 # -------------------------------------------------------------------
 # PACKAGING
@@ -131,7 +131,7 @@ configure_file (
 )
 install ( FILES "${CMAKE_CURRENT_BINARY_DIR}/Roadef11CommonConfig.cmake"
                 "scripts/add_test_suite.cmake"
-                DESTINATION share/${PROJECT_NAME}/cmake/ )
+                DESTINATION lib/cmake/${CPACK_PACKAGE_FILE_NAME}/ )
 
 # Misc
 install( FILES README.md COPYING ChangeLog
@@ -147,7 +147,7 @@ install ( TARGETS roadef11-checker
           LIBRARY       DESTINATION lib
         )
 
-install ( EXPORT Roadef11Checker DESTINATION share/${PROJECT_NAME}/cmake/ )
+install ( EXPORT Roadef11Checker DESTINATION lib/cmake/${CPACK_PACKAGE_FILE_NAME}/ )
 
 # -------------------------------------------------------------------
 # SUBDIRS

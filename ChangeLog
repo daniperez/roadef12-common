@@ -1,3 +1,7 @@
+* Sun Oct 30 2011 - v0.2.1
+- Fixes in the Roadef11CommonConfig script. Roadef11CommonConfig.cmake
+  script is automatically found now.
+
 * Sun Oct 30 2011 - v0.2.0
 - Improved CMake script to allow third parties use the library.
 
