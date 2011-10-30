@@ -21,28 +21,20 @@
 # THE SOFTWARE.
 #
 
+# ###################################################################
 # -------------------------------------------------------------------
-# add_doxygen_test_suite
+# Roadef11 Common Finder
 # -------------------------------------------------------------------
 #
-# add_doxygen_test_suite - Adds a test that checks that doxygen is well formed. 
+# Dependencies are looked up and Roadef11Common_INCLUDE_DIRS variable
+# pointing to the folder containting the headers is set.
+# Roadef11Common_FOUND is set to true if the finder succeeded.
+# Roadef11Checker points to the executable of the ROADEF checker.
+# 
+# We also define solve_instance macro, easing the task of testing 
+# the data instances against your code.
 #
-#  add_doxygen_test_suite () 
-#
-macro ( add_doxygen_test_suite )
-
-    if ( UNIX )
-
-        add_test (
-                   NAME "DoxygenErrors" 
-                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-                   COMMAND "${CMAKE_SOURCE_DIR}/scripts/doxytest.sh"
-                           "${DOXYGEN_EXECUTABLE}"
-                           "${DOXYFILE}"
-                 )
-    endif ()
-
-endmacro ()
+# ###################################################################
 
 # -------------------------------------------------------------------
 # solve_instance 
@@ -50,25 +42,25 @@ endmacro ()
 #
 # solve_instance - Solves an instance and checks the solution. 
 #
-#  solve_instance ( NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS ) 
+#  solve_instance ( TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS ) 
 #
-# TARGET is the executable to execute. CHECKER_TARGET is the executable of
-# the checker. NAME is the name of the instance to solve. MODEL is the
-# parameters of the problem as per ROADEF's specs.
-# INITIAL_SOLUTION is the initial feasible solution. SOLUTION is the output
-# file to write. Finally, CMD_ARGS are other arguments to append to TARGET call.
+# TARGET is the executable to execute (your application). NAME is the name of
+# the instance to solve. MODEL is the parameters of the problem as per ROADEF's
+# specs. INITIAL_SOLUTION is the initial feasible solution. SOLUTION is the
+# output file to write. Finally, CMD_ARGS are other arguments to append to
+# TARGET call.
 #
-macro ( solve_instance TARGET CHECKER_TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
+macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
 
     add_test ( NAME "testsuite-${NAME}-solution" 
-               COMMAND "${TARGET}"
+               COMMAND "$<TARGET_FILE:${TARGET}>"
                        "-p" "${MODEL}"
                        "-i" "${INITIAL_SOLUTION}"
                        "-o" "${SOLUTION}"
                        "${CMD_ARGS}" )
 
     add_test ( NAME "testsuite-${NAME}-solution-check" 
-               COMMAND "${CHECKER_TARGET}"
+               COMMAND "$<TARGET_FILE:roadef11-checker>"
                        "${MODEL}"
                        "${INITIAL_SOLUTION}"
                        "${SOLUTION}" )
@@ -81,9 +73,40 @@ macro ( solve_instance TARGET CHECKER_TARGET NAME MODEL INITIAL_SOLUTION SOLUTIO
                        -V
                        -R "testsuite-${NAME}-solution"
                        -E "testsuite-${NAME}-solution-check"
-               DEPENDS MainTestSuite ExampleMain )
+               DEPENDS ${TARGET} roadef11-checker )
+
 endmacro ()
 
-find_path ( ROADEF11COMMON_INCLUDE_DIR "Service.hpp" PATHS "roadef11-common/service/" NO_DEFAULT_PATH )
+# -------------------------------------------------------------------
+# MAIN
+# -------------------------------------------------------------------
 
-mark_as_advanced ( ROADEF11COMMON_INCLUDE_DIR )
+# OPTIONAL used here because include won't find a package with such a name
+# when compiling example/ folder in roadef11-common's source tree.
+get_filename_component(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include( ${SELF_DIR}/Roadef11Checker.cmake OPTIONAL )
+
+find_package ( Boost 1.44.0
+               COMPONENTS program_options unit_test_framework )
+
+if ( Boost_FOUND)
+
+    include_directories ( ${Boost_INCLUDE_DIRS} )
+
+    include ( add_test_suite )
+
+    set ( DATA_DIR "${CMAKE_SOURCE_DIR}/roadef11-material/data/" )
+    enable_testing() 
+
+    find_path ( Roadef11Common_INCLUDE_DIRS "roadef11-common/service/Service.hpp"
+                PATHS "${CMAKE_SOURCE_DIR}"
+                NO_DEFAULT_PATH )
+
+    mark_as_advanced ( Roadef11Common_INCLUDE_DIRS )
+
+    set ( Roadef11Common_FOUND true )
+
+else ()
+
+endif ()
+
