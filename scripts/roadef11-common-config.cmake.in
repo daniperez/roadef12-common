@@ -50,6 +50,44 @@
 # output file to write. Finally, CMD_ARGS are other arguments to append to
 # TARGET call.
 #
+macro ( solve_all_instances TARGET )
+
+# i) Example instance
+    solve_instance (
+      "${TARGET}"
+      "example" # You can do 'make example' to solve the example instance
+      "${CMAKE_INSTALL_PREFIX}/data_example/model_example.txt"
+      "${CMAKE_INSTALL_PREFIX}/data_example/initial_solution_example.txt"
+      "${CMAKE_INSTALL_PREFIX}/data_example/initial_solution_example.txt"
+      "-u" )
+
+# ii) A1 instances
+    foreach ( i RANGE 1 5 )
+      solve_instance (
+        "${TARGET}"
+        "a1-${i}" # You can do 'make a1-[1-4]' to solve a single A1 instance 
+        "${CMAKE_INSTALL_PREFIX}/data_a1/model_a1_${i}.txt"
+        "${CMAKE_INSTALL_PREFIX}/data_a1/assignment_a1_${i}.txt"
+        "${CMAKE_INSTALL_PREFIX}/solution_a1_${i}.txt"
+        "" )
+    endforeach ()
+
+endmacro()
+
+# -------------------------------------------------------------------
+# solve_instance 
+# -------------------------------------------------------------------
+#
+# solve_instance - Solves an instance and checks the solution. 
+#
+#  solve_instance ( TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS ) 
+#
+# TARGET is the executable to execute (your application). NAME is the name of
+# the instance to solve. MODEL is the parameters of the problem as per ROADEF's
+# specs. INITIAL_SOLUTION is the initial feasible solution. SOLUTION is the
+# output file to write. Finally, CMD_ARGS are other arguments to append to
+# TARGET call.
+#
 macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
 
     add_test ( NAME "testsuite-${NAME}-solution" 
@@ -111,7 +149,7 @@ endfunction(add_test_suite)
 # OPTIONAL used here because include won't find a package with such a name
 # when compiling example/ folder in roadef11-common's source tree.
 get_filename_component(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-include( ${SELF_DIR}/Roadef11Checker.cmake OPTIONAL )
+include( ${SELF_DIR}/roadef11-checker.cmake OPTIONAL )
 
 find_package ( Boost 1.44.0
                COMPONENTS program_options unit_test_framework )

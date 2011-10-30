@@ -30,25 +30,7 @@ set_target_properties ( Main
 # -------------------------------------------------------------------
 # TARGET : check 
 # -------------------------------------------------------------------
-# i) Example instance
-solve_instance (
-  "Main"
-  "example" # You can do 'make example' to solve the example instance
-  "${DATA_DIR}/data_example/model_example.txt"
-  "${DATA_DIR}/data_example/initial_solution_example.txt"
-  "${DATA_DIR}/data_example/initial_solution_example.txt"
-  "-u" )
-
-# ii) A1 instances
-foreach ( i RANGE 1 5 )
-  solve_instance (
-    "Main"
-    "a1-${i}" # You can do 'make a1-[1-4]' to solve a single A1 instance 
-    "${DATA_DIR}/data_a1/model_a1_${i}.txt"
-    "${DATA_DIR}/data_a1/assignment_a1_${i}.txt"
-    "${CMAKE_BINARY_DIR}/solution_a1_${i}.txt"
-    "" )
-endforeach ()
+solve_all_instances ( Main )
 
 # Don't forget to add the test suite to the DEPENDS argument list.
 # a1-1,a1-2,... targets write log messages whereas "check" doesn't
