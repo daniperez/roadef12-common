@@ -30,7 +30,7 @@ set_target_properties ( Main
 # -------------------------------------------------------------------
 # TARGET : check 
 # -------------------------------------------------------------------
-solve_all_instances ( Main )
+solve_all_instances ( "Main" "${roadef11-common_DATA}" )
 
 # Don't forget to add the test suite to the DEPENDS argument list.
 # a1-1,a1-2,... targets write log messages whereas "check" doesn't

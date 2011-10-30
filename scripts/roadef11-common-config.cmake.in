@@ -37,28 +37,26 @@
 # ###################################################################
 
 # -------------------------------------------------------------------
-# solve_instance 
+# solve_all_instances 
 # -------------------------------------------------------------------
 #
-# solve_instance - Solves an instance and checks the solution. 
+# solve_all_instances - Adds test suites for every ROADEF instances. 
 #
-#  solve_instance ( TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS ) 
+#  solve_instance ( TARGET DATA_FOLDER ) 
 #
-# TARGET is the executable to execute (your application). NAME is the name of
-# the instance to solve. MODEL is the parameters of the problem as per ROADEF's
-# specs. INITIAL_SOLUTION is the initial feasible solution. SOLUTION is the
-# output file to write. Finally, CMD_ARGS are other arguments to append to
-# TARGET call.
-#
-macro ( solve_all_instances TARGET )
+# TARGET is the executable to execute (your application). DATA_FOLDER is
+# the root folder containing the instances (i.e. the folder containing
+# data_example and data_a1 folders for example).
+##
+macro ( solve_all_instances TARGET DATA_FOLDER )
 
 # i) Example instance
     solve_instance (
       "${TARGET}"
       "example" # You can do 'make example' to solve the example instance
-      "${CMAKE_INSTALL_PREFIX}/data_example/model_example.txt"
-      "${CMAKE_INSTALL_PREFIX}/data_example/initial_solution_example.txt"
-      "${CMAKE_INSTALL_PREFIX}/data_example/initial_solution_example.txt"
+      "${DATA_FOLDER}/data_example/model_example.txt"
+      "${DATA_FOLDER}/data_example/initial_solution_example.txt"
+      "${DATA_FOLDER}/data_example/initial_solution_example.txt"
       "-u" )
 
 # ii) A1 instances
@@ -66,9 +64,9 @@ macro ( solve_all_instances TARGET )
       solve_instance (
         "${TARGET}"
         "a1-${i}" # You can do 'make a1-[1-4]' to solve a single A1 instance 
-        "${CMAKE_INSTALL_PREFIX}/data_a1/model_a1_${i}.txt"
-        "${CMAKE_INSTALL_PREFIX}/data_a1/assignment_a1_${i}.txt"
-        "${CMAKE_INSTALL_PREFIX}/solution_a1_${i}.txt"
+        "${DATA_FOLDER}/data_a1/model_a1_${i}.txt"
+        "${DATA_FOLDER}/data_a1/assignment_a1_${i}.txt"
+        "${CMAKE_BINARY_DIR}/solution_a1_${i}.txt"
         "" )
     endforeach ()
 
@@ -165,7 +163,14 @@ if ( Boost_FOUND)
                 PATHS "${CMAKE_SOURCE_DIR}"
                 NO_DEFAULT_PATH )
 
+    find_path ( roadef11-common_DATA "data_example/initial_solution_example.txt"
+                PATHS
+                  "${CMAKE_SOURCE_DIR}/roadef11-material/data/"
+                  "share/roadef11-common/material/data/"
+                DOC "Data instances" )
+
     mark_as_advanced ( roadef11-common_INCLUDE_DIRS )
+    mark_as_advanced ( roadef11-common_DATA )
 
     set ( roadef11-common_FOUND true )
 

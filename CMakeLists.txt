@@ -114,7 +114,6 @@ install ( DIRECTORY roadef11-common
           DESTINATION include
           FILES_MATCHING PATTERN *.hpp )
 
-message ( SEND_ERROR "Set a variable to the material location (and use it in solve_all_instances" )
 # Material
 install( DIRECTORY roadef11-material/
          DESTINATION share/${PROJECT_NAME}/material
