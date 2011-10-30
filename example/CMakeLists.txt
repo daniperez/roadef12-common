@@ -54,7 +54,7 @@ endforeach ()
 # a1-1,a1-2,... targets write log messages whereas "check" doesn't
 # (only in case of failure)
 add_custom_target(
-                  check
+                  check-instances 
                   COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
                   DEPENDS Main roadef11-checker
                  )
