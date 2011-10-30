@@ -78,6 +78,33 @@ macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
 endmacro ()
 
 # -------------------------------------------------------------------
+# add_test_suite 
+# -------------------------------------------------------------------
+#
+# add_test_suite - Adds a test suite with the given name and sources.
+#
+#  add_test_suite ( name source_list ) 
+#
+# name is the name of the test suite and source_list is the list of sources to
+# compile.
+#
+function(
+            ## Function name 
+            add_test_suite 
+            ## Argument list
+            name           # Test name
+            source_list    # List of sources
+        )
+
+    add_executable ( ${name} ${source_list} )
+
+    set_target_properties ( ${name} PROPERTIES COMPILE_FLAGS "-std=c++0x -Wall -Werror -g" )
+
+    add_test ( ${name} ${name} )
+
+endfunction(add_test_suite)
+
+# -------------------------------------------------------------------
 # MAIN
 # -------------------------------------------------------------------
 
@@ -92,8 +119,6 @@ find_package ( Boost 1.44.0
 if ( Boost_FOUND)
 
     include_directories ( ${Boost_INCLUDE_DIRS} )
-
-    include ( add_test_suite )
 
     set ( DATA_DIR "${CMAKE_SOURCE_DIR}/roadef11-material/data/" )
     enable_testing() 
