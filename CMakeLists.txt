@@ -103,12 +103,6 @@ if ( Boost_FOUND )
                        "${DOXYGEN_EXECUTABLE}"
                        "${DOXYFILE}"
              )
-
-    add_custom_target(
-                  check
-                  COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
-                  DEPENDS MainTestSuite roadef11-checker
-                 )
 endif ()
 
 # -------------------------------------------------------------------
@@ -160,6 +154,14 @@ install ( EXPORT Roadef11Checker DESTINATION share/${PROJECT_NAME}/cmake/ )
 # -------------------------------------------------------------------
 add_subdirectory ( ${PROJECT_NAME} )
 add_subdirectory ( example )
+
+
+# Keep this last
+add_custom_target(
+              check
+              COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
+              DEPENDS Main MainTestSuite roadef11-checker
+             )
 
 include ( CPack )
 
