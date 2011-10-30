@@ -26,9 +26,9 @@
 # Roadef11 Common Finder
 # -------------------------------------------------------------------
 #
-# Dependencies are looked up and Roadef11Common_INCLUDE_DIRS variable
+# Dependencies are looked up and roadef11-common_INCLUDE_DIRS variable
 # pointing to the folder containting the headers is set.
-# Roadef11Common_FOUND is set to true if the finder succeeded.
+# roadef11-common_FOUND is set to true if the finder succeeded.
 # Roadef11Checker points to the executable of the ROADEF checker.
 # 
 # We also define solve_instance macro, easing the task of testing 
@@ -98,13 +98,13 @@ if ( Boost_FOUND)
     set ( DATA_DIR "${CMAKE_SOURCE_DIR}/roadef11-material/data/" )
     enable_testing() 
 
-    find_path ( Roadef11Common_INCLUDE_DIRS "roadef11-common/service/Service.hpp"
+    find_path ( roadef11-common_INCLUDE_DIRS "roadef11-common/service/Service.hpp"
                 PATHS "${CMAKE_SOURCE_DIR}"
                 NO_DEFAULT_PATH )
 
-    mark_as_advanced ( Roadef11Common_INCLUDE_DIRS )
+    mark_as_advanced ( roadef11-common_INCLUDE_DIRS )
 
-    set ( Roadef11Common_FOUND true )
+    set ( roadef11-common_FOUND true )
 
 else ()
 

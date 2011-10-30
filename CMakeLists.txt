@@ -126,10 +126,10 @@ install( FILES example/ExampleMain.cpp  example/CMakeLists.txt
 
 # CMake scripts
 configure_file (
-  "scripts/Roadef11CommonConfig.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/Roadef11CommonConfig.cmake" @ONLY
+  "scripts/roadef11-common-config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/roadef11-common-config.cmake" @ONLY
 )
-install ( FILES "${CMAKE_CURRENT_BINARY_DIR}/Roadef11CommonConfig.cmake"
+install ( FILES "${CMAKE_CURRENT_BINARY_DIR}/roadef11-common-config.cmake"
                 "scripts/add_test_suite.cmake"
                 DESTINATION lib/cmake/${CPACK_PACKAGE_FILE_NAME}/ )
 
@@ -141,13 +141,13 @@ install( FILES README.md COPYING ChangeLog
 # It's exported by means of CMake's export interface (i.e.
 # we can easily import the target in other projects).
 install ( TARGETS roadef11-checker
-          EXPORT        Roadef11Checker 
+          EXPORT        roadef11-checker 
           RUNTIME       DESTINATION bin
           PUBLIC_HEADER DESTINATION include
           LIBRARY       DESTINATION lib
         )
 
-install ( EXPORT Roadef11Checker DESTINATION lib/cmake/${CPACK_PACKAGE_FILE_NAME}/ )
+install ( EXPORT roadef11-checker DESTINATION lib/cmake/${CPACK_PACKAGE_FILE_NAME}/ )
 
 # -------------------------------------------------------------------
 # SUBDIRS
