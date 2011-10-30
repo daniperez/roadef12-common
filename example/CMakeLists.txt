@@ -8,15 +8,15 @@ set ( CMAKE_MODULE_PATH ${Roadef11CommonMacroLocation} )
 # DEPENDENCIES 
 # -------------------------------------------------------------------
 # CMAKE_BINARY_DIR used here to allow compiling the example within
-# Roadef11Common source tree.
-set ( Roadef11Common_DIR ${CMAKE_BINARY_DIR} )
-find_package ( Roadef11Common )
+# roadef11-common source tree.
+set ( roadef11-common_DIR ${CMAKE_BINARY_DIR} )
+find_package ( roadef11-common )
 
 # -------------------------------------------------------------------
 # HEADERS 
 # -------------------------------------------------------------------
 include_directories ( BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
-                             ${Roadef11Common_INCLUDE_DIRS} )
+                             ${roadef11-common_INCLUDE_DIRS} )
 
 # -------------------------------------------------------------------
 # TARGET : Main 
