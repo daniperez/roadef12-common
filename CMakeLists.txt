@@ -6,7 +6,7 @@ cmake_minimum_required ( VERSION 2.6 )
 project ( roadef11-common )
 set ( roadef11_VERSION_MAJOR 0 )
 set ( roadef11_VERSION_MINOR 2 )
-set ( roadef11_VERSION_PATCH 1 )
+set ( roadef11_VERSION_PATCH 2 )
 
 # -------------------------------------------------------------------
 # PACKAGING
@@ -114,6 +114,7 @@ install ( DIRECTORY roadef11-common
           DESTINATION include
           FILES_MATCHING PATTERN *.hpp )
 
+message ( SEND_ERROR "Set a variable to the material location (and use it in solve_all_instances" )
 # Material
 install( DIRECTORY roadef11-material/
          DESTINATION share/${PROJECT_NAME}/material
