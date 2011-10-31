@@ -114,40 +114,12 @@ macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
 endmacro ()
 
 # -------------------------------------------------------------------
-# add_test_suite 
-# -------------------------------------------------------------------
-#
-# add_test_suite - Adds a test suite with the given name and sources.
-#
-#  add_test_suite ( name source_list ) 
-#
-# name is the name of the test suite and source_list is the list of sources to
-# compile.
-#
-function(
-            ## Function name 
-            add_test_suite 
-            ## Argument list
-            name           # Test name
-            source_list    # List of sources
-        )
-
-    add_executable ( ${name} ${source_list} )
-
-    set_target_properties ( ${name} PROPERTIES COMPILE_FLAGS "-std=c++0x -Wall -Werror -g" )
-
-    add_test ( ${name} ${name} )
-
-endfunction(add_test_suite)
-
-# -------------------------------------------------------------------
 # MAIN
 # -------------------------------------------------------------------
 
 # OPTIONAL used here because include won't find a package with such a name
 # when compiling example/ folder in roadef11-common's source tree.
-get_filename_component(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-include( ${SELF_DIR}/roadef11-checker.cmake OPTIONAL )
+include( roadef11-checker OPTIONAL )
 
 find_package ( Boost 1.44.0
                COMPONENTS program_options unit_test_framework )
@@ -156,7 +128,6 @@ if ( Boost_FOUND)
 
     include_directories ( ${Boost_INCLUDE_DIRS} )
 
-    set ( DATA_DIR "${CMAKE_SOURCE_DIR}/roadef11-material/data/" )
     enable_testing() 
 
     find_path ( roadef11-common_INCLUDE_DIRS "roadef11-common/service/Service.hpp"
@@ -174,7 +145,9 @@ if ( Boost_FOUND)
 
     set ( roadef11-common_FOUND true )
 
-else ()
-
 endif ()
 
+
+if ( roadef11-common_FOUND )
+  message ( STATUS "roadef11-common found" )
+endif ()
