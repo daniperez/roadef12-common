@@ -119,7 +119,8 @@ endmacro ()
 
 # OPTIONAL used here because include won't find a package with such a name
 # when compiling example/ folder in roadef11-common's source tree.
-include( roadef11-checker OPTIONAL )
+get_filename_component(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include( ${SELF_DIR}/roadef11-checker.cmake OPTIONAL )
 
 find_package ( Boost 1.44.0
                COMPONENTS program_options unit_test_framework )
