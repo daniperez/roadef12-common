@@ -22,6 +22,7 @@ A more involving installation process requires the use of CMake:
 2. Create a CMakeLists.txt like the one found in examples/CMakeLists.txt.
    In summary:
     1. Find the package:
+
         > find_package ( roadef12-common )
     2. If the package is found, it will define:
         * roadef12-common_INCLUDE_DIRS: where the headers were installed.  
@@ -30,7 +31,7 @@ A more involving installation process requires the use of CMake:
         * Macro 'solve_all_instances' 
     3. Compile with roadef12-common_INCLUDE_DIRS in your include path and
        use solve_all_instances to check your code agains all the instances
-       (doc in scripts/roadef12-common-config.cmake.inx).
+       (doc in scripts/roadef12-common-config.cmake.in).
 
 
 How to use it 
