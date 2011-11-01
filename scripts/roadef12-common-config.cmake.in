@@ -151,4 +151,6 @@ endif ()
 
 if ( roadef12-common_FOUND )
   message ( STATUS "roadef12-common found" )
+  message ( STATUS "  + data: ${roadef12-common_DATA}" )
+  message ( STATUS "  +  inc: ${roadef12-common_INCLUDE_DIRS}" )
 endif ()
