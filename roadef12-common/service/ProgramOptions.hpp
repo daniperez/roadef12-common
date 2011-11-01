@@ -20,11 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __roadef11_PROGRAM_OPTIONS_HPP
-#define __roadef11_PROGRAM_OPTIONS_HPP
+#ifndef __roadef12_PROGRAM_OPTIONS_HPP
+#define __roadef12_PROGRAM_OPTIONS_HPP
 ///////////////////////////////////////////////////////////////////////////
-// roadef11 Service
-#include <roadef11-common/service/Service.hpp>
+// roadef12 Service
+#include <roadef12-common/service/Service.hpp>
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <iostream>
@@ -33,7 +33,7 @@
 #include <boost/program_options.hpp>
 ///////////////////////////////////////////////////////////////////////////
 
-namespace ROADEF11
+namespace ROADEF12COMMON
 {   
     /**
      * Methods to parse command-line options.
@@ -46,22 +46,22 @@ namespace ROADEF11
             
         /**
          * Parses the given command-line with the recognized options (see
-         * ROADEF11::ProgramOptions::createCommandLineOptions).
+         * ROADEF12COMMON::ProgramOptions::createCommandLineOptions).
          * 
          * @param argc Number of arguments in argv.
          * @param argv Command-line switches including program name.
-         * @return ROADEF11::ServiceInput.
+         * @return ROADEF12COMMON::ServiceInput.
          */    
-        static ROADEF11::ServiceInput
+        static ROADEF12COMMON::ServiceInput
         parseCommandLine ( int argc, char** argv )
           throw
           (
-              ROADEF11::InvalidParametersException,
-              ROADEF11::IOException,
-              ROADEF11::DoNotContinue
+              ROADEF12COMMON::InvalidParametersException,
+              ROADEF12COMMON::IOException,
+              ROADEF12COMMON::DoNotContinue
           )
         {   
-            ROADEF11::ServiceInput input;
+            ROADEF12COMMON::ServiceInput input;
             
             
             boost::program_options::options_description options
@@ -83,7 +83,7 @@ namespace ROADEF11
             }
             catch( boost::program_options::unknown_option& e )
             {
-                throw ROADEF11::InvalidParametersException
+                throw ROADEF12COMMON::InvalidParametersException
                 (
                     e.what()
                 );
@@ -104,39 +104,39 @@ namespace ROADEF11
          * @param options Options description.
          * @param argc Number of arguments in argv.
          * @param argv Command-line switches including program name.
-         * @param input ROADEF11::ServiceInput output argument.
+         * @param input ROADEF12COMMON::ServiceInput output argument.
          */     
-        static ROADEF11::ServiceInput&
+        static ROADEF12COMMON::ServiceInput&
         processParsedOptions
         (
             const boost::program_options::variables_map& vm,
             const boost::program_options::options_description& options,
             const int argc,
             char** argv,
-            ROADEF11::ServiceInput& input
+            ROADEF12COMMON::ServiceInput& input
         )
           throw
           (
-              ROADEF11::InvalidParametersException,
-              ROADEF11::IOException,
-              ROADEF11::DoNotContinue
+              ROADEF12COMMON::InvalidParametersException,
+              ROADEF12COMMON::IOException,
+              ROADEF12COMMON::DoNotContinue
           )
         {
             if ( vm.count("help") )
             {
                 std::cout << argv[0] << " [options] <executable> " << std::endl;
                 std::cout << options << std::endl;
-                throw ROADEF11::DoNotContinue();
+                throw ROADEF12COMMON::DoNotContinue();
             }
             else if ( vm.count("name") )
             {
-                std::cout << ROADEF11::Service::team() << std::endl;
-                throw ROADEF11::DoNotContinue();
+                std::cout << ROADEF12COMMON::Service::team() << std::endl;
+                throw ROADEF12COMMON::DoNotContinue();
             }
             else if ( vm.count("verbose") )
             {
-                std::cout << ROADEF11::Service::team() << std::endl;
-                throw ROADEF11::DoNotContinue();
+                std::cout << ROADEF12COMMON::Service::team() << std::endl;
+                throw ROADEF12COMMON::DoNotContinue();
             }
             else
             {
@@ -146,7 +146,7 @@ namespace ROADEF11
                     vm.count("time") == 0 || // 'time' and 'seed' have their
                     vm.count("seed") == 0 )  // own defaults, this is not
                 {                             // really needed.
-                    throw ROADEF11::InvalidParametersException
+                    throw ROADEF12COMMON::InvalidParametersException
                             ( "-p, -i and -o parameters are mandatory" );
                 }
             }
@@ -160,7 +160,7 @@ namespace ROADEF11
          * @param argc Number of arguments in argv.
          * @param argv Command-line switches including program name.
          * @param options Accepted options.
-         * @throw ROADEF11::DoNotContinue if the application can finish
+         * @throw ROADEF12COMMON::DoNotContinue if the application can finish
          *                                after calling this method.
          */
         static
@@ -170,13 +170,13 @@ namespace ROADEF11
             char** argv,
             const boost::program_options::options_description& options
         )
-          throw ( ROADEF11::DoNotContinue )
+          throw ( ROADEF12COMMON::DoNotContinue )
         {
             if ( argc == 1 )
             {
                 std::cout << argv[0] << " [options] <executable> " << std::endl;
                 std::cout << options << std::endl;
-                throw ROADEF11::DoNotContinue();
+                throw ROADEF12COMMON::DoNotContinue();
             }
             else
             {
@@ -184,9 +184,9 @@ namespace ROADEF11
                 {
                     if ( std::string ( argv[i] ) == "-name" )
                     {
-                        std::cout << ROADEF11::Service::team() << std::endl;
+                        std::cout << ROADEF12COMMON::Service::team() << std::endl;
                         
-                        throw ROADEF11::DoNotContinue();
+                        throw ROADEF12COMMON::DoNotContinue();
                     }
                 }
             }
@@ -196,12 +196,12 @@ namespace ROADEF11
          * Creates boost's command-line options.
          * 
          * @param input Service's input to fill in.
-         * @throw ROADEF11::InvalidParametersException if a non-recognized
+         * @throw ROADEF12COMMON::InvalidParametersException if a non-recognized
          *        parameter is passed.
          */
         static boost::program_options::options_description
-        createCommandLineOptions ( ROADEF11::ServiceInput& input )
-          throw ( ROADEF11::InvalidParametersException )
+        createCommandLineOptions ( ROADEF12COMMON::ServiceInput& input )
+          throw ( ROADEF12COMMON::InvalidParametersException )
         {
             boost::program_options::options_description
                 genericOptionsDesc ( "Generic options" );

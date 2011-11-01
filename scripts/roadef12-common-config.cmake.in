@@ -23,15 +23,16 @@
 
 # ###################################################################
 # -------------------------------------------------------------------
-# Roadef11 Common Finder
+# Roadef12 Common Finder
 # -------------------------------------------------------------------
 #
-# Dependencies are looked up and roadef11-common_INCLUDE_DIRS variable
+# Dependencies are looked up and roadef12-common_INCLUDE_DIRS variable
 # pointing to the folder containting the headers is set.
-# roadef11-common_FOUND is set to true if the finder succeeded.
-# Roadef11Checker points to the executable of the ROADEF checker.
+# roadef12-common_FOUND is set to true if the finder succeeded.
+# roadef12-common_DATA will point to the folder with the data instances.
+# roadef12-checker target is also defined (executable of the checker)..
 # 
-# We also define solve_instance macro, easing the task of testing 
+# We also define solve_all_instances macro, easing the task of testing 
 # the data instances against your code.
 #
 # ###################################################################
@@ -96,7 +97,7 @@ macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
                        "${CMD_ARGS}" )
 
     add_test ( NAME "testsuite-${NAME}-solution-check" 
-               COMMAND "$<TARGET_FILE:roadef11-checker>"
+               COMMAND "$<TARGET_FILE:roadef12-checker>"
                        "${MODEL}"
                        "${INITIAL_SOLUTION}"
                        "${SOLUTION}" )
@@ -109,7 +110,7 @@ macro ( solve_instance TARGET NAME MODEL INITIAL_SOLUTION SOLUTION CMD_ARGS )
                        -V
                        -R "testsuite-${NAME}-solution"
                        -E "testsuite-${NAME}-solution-check"
-               DEPENDS ${TARGET} roadef11-checker )
+               DEPENDS ${TARGET} roadef12-checker )
 
 endmacro ()
 
@@ -118,9 +119,9 @@ endmacro ()
 # -------------------------------------------------------------------
 
 # OPTIONAL used here because include won't find a package with such a name
-# when compiling example/ folder in roadef11-common's source tree.
+# when compiling example/ folder in roadef12-common's source tree.
 get_filename_component(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-include( ${SELF_DIR}/roadef11-checker.cmake OPTIONAL )
+include( ${SELF_DIR}/roadef12-checker.cmake OPTIONAL )
 
 find_package ( Boost 1.44.0
                COMPONENTS program_options unit_test_framework )
@@ -131,24 +132,23 @@ if ( Boost_FOUND)
 
     enable_testing() 
 
-    find_path ( roadef11-common_INCLUDE_DIRS "roadef11-common/service/Service.hpp"
-                PATHS "${CMAKE_SOURCE_DIR}"
-                NO_DEFAULT_PATH )
+    find_path ( roadef12-common_INCLUDE_DIRS "roadef12-common/service/Service.hpp"
+                PATHS "${CMAKE_SOURCE_DIR}" )
 
-    find_path ( roadef11-common_DATA "data_example/initial_solution_example.txt"
+    find_path ( roadef12-common_DATA "data_example/initial_solution_example.txt"
                 PATHS
-                  "${CMAKE_SOURCE_DIR}/roadef11-material/data/"
-                  "share/roadef11-common/material/data/"
+                  "${CMAKE_SOURCE_DIR}/roadef12-material/data/"
+                  "share/roadef12-common/material/data/"
                 DOC "Data instances" )
 
-    mark_as_advanced ( roadef11-common_INCLUDE_DIRS )
-    mark_as_advanced ( roadef11-common_DATA )
+    mark_as_advanced ( roadef12-common_INCLUDE_DIRS )
+    mark_as_advanced ( roadef12-common_DATA )
 
-    set ( roadef11-common_FOUND true )
+    set ( roadef12-common_FOUND true )
 
 endif ()
 
 
-if ( roadef11-common_FOUND )
-  message ( STATUS "roadef11-common found" )
+if ( roadef12-common_FOUND )
+  message ( STATUS "roadef12-common found" )
 endif ()

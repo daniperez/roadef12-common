@@ -20,15 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __roadef11_MODEL_HPP
-#define __roadef11_MODEL_HPP
+#ifndef __roadef12_MODEL_HPP
+#define __roadef12_MODEL_HPP
 ///////////////////////////////////////////////////////////////////////////
-// roadef11 Command
-#include "roadef11-common/objects/model/Machines.hpp"
-#include "roadef11-common/objects/model/Resources.hpp"
-#include "roadef11-common/objects/model/Services.hpp"
-#include "roadef11-common/objects/model/Processes.hpp"
-#include "roadef11-common/objects/model/GeneralCosts.hpp"
+// roadef12 Command
+#include "roadef12-common/objects/model/Machines.hpp"
+#include "roadef12-common/objects/model/Resources.hpp"
+#include "roadef12-common/objects/model/Services.hpp"
+#include "roadef12-common/objects/model/Processes.hpp"
+#include "roadef12-common/objects/model/GeneralCosts.hpp"
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <vector>
@@ -37,7 +37,7 @@
 #include <boost/shared_ptr.hpp>
 ///////////////////////////////////////////////////////////////////////////
 
-namespace ROADEF11
+namespace ROADEF12COMMON
 {
     /**
      * Input parameters describing the problem.

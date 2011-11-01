@@ -20,16 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __roadef11_ASSIGNMENT_HPP
-#define __roadef11_ASSIGNMENT_HPP
+#ifndef __roadef12_ASSIGNMENT_HPP
+#define __roadef12_ASSIGNMENT_HPP
 ///////////////////////////////////////////////////////////////////////////
-// roadef11
-#include "roadef11-common/service/ServiceExceptions.hpp"
-#include "roadef11-common/Types.hpp"
-#include "roadef11-common/objects/Assignment.hpp"
-#include "roadef11-common/objects/Parameters.hpp"
-#include "roadef11-common/util/Util.hpp"
-#include "roadef11-common/Types.hpp"
+// roadef12
+#include "roadef12-common/service/ServiceExceptions.hpp"
+#include "roadef12-common/Types.hpp"
+#include "roadef12-common/objects/Assignment.hpp"
+#include "roadef12-common/objects/Parameters.hpp"
+#include "roadef12-common/util/Util.hpp"
+#include "roadef12-common/Types.hpp"
 ///////////////////////////////////////////////////////////////////////////
 // BOOST
 #include <boost/lexical_cast.hpp>
@@ -41,7 +41,7 @@
 #include <set>
 #include <fstream>
 ///////////////////////////////////////////////////////////////////////////
-namespace ROADEF11
+namespace ROADEF12COMMON
 {
     class Parameters;
 
@@ -72,7 +72,7 @@ namespace ROADEF11
              * @todo This should go into a factory.
              */ 
             Assignment ( const char* fileName, const Parameters& parameters )
-            throw ( ROADEF11::IOException, ROADEF11::ParseException )
+            throw ( ROADEF12COMMON::IOException, ROADEF12COMMON::ParseException )
                 : _parameters ( parameters )
             {
                 throwing_assert ( fileName != NULL );
@@ -81,7 +81,7 @@ namespace ROADEF11
                 
                 if ( file.fail() )
                 {
-                    throw ROADEF11::IOException
+                    throw ROADEF12COMMON::IOException
                     (
                         (
                             std::string ( "'" ) + fileName +
@@ -102,7 +102,7 @@ namespace ROADEF11
                     
                     if ( file.fail() )
                     {
-                        throw ROADEF11::IOException
+                        throw ROADEF12COMMON::IOException
                         (
                             (std::string(fileName) +
                                 std::string (" cannot be read")).c_str()
@@ -115,7 +115,7 @@ namespace ROADEF11
                 
                 if ( file.fail() )
                 {
-                    throw ROADEF11::IOException
+                    throw ROADEF12COMMON::IOException
                     (
                         (std::string(fileName) +
                             std::string (" cannot be closed")).c_str()
@@ -269,7 +269,7 @@ namespace ROADEF11
              * @throw IOException if the input files cannot be read.
              */ 
             void
-            write ( const char* fileName ) const throw ( ROADEF11::IOException)
+            write ( const char* fileName ) const throw ( ROADEF12COMMON::IOException)
             {
                 std::ofstream output ( fileName, std::ios::out );
 
