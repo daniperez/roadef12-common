@@ -75,7 +75,7 @@ namespace ROADEF12COMMON
             throw ( ROADEF12COMMON::IOException, ROADEF12COMMON::ParseException )
                 : _parameters ( parameters )
             {
-                throwing_assert ( fileName != NULL );
+                Util::throwing_assert ( fileName != NULL );
                 
                 std::ifstream file ( fileName, std::ios::in );
                 
@@ -141,7 +141,7 @@ namespace ROADEF12COMMON
             ushort
             getMachine ( ushort processId ) const
             {
-                throwing_assert ( processId < _parameters.processes.size() ) ;
+                Util::throwing_assert ( processId < _parameters.processes.size() ) ;
                 
                 return _processToMachine [ processId ] ;
             }
@@ -156,7 +156,7 @@ namespace ROADEF12COMMON
             const std::list<ushort>&
             getProcessesPerMachine ( ushort machineId ) const
             {
-                throwing_assert ( machineId < _parameters.machines.size() ) ;
+                Util::throwing_assert ( machineId < _parameters.machines.size() ) ;
 
                 return _machineToProcess [ machineId ];
             }
@@ -174,8 +174,8 @@ namespace ROADEF12COMMON
             const uint
             getUtilization ( ushort machine, ushort resource ) const
             {
-                throwing_assert ( machine < _parameters.machines.size() ) ;
-                throwing_assert ( resource < _parameters.resources.size() ) ;
+                Util::throwing_assert ( machine < _parameters.machines.size() ) ;
+                Util::throwing_assert ( resource < _parameters.resources.size() ) ;
 
                 return _machineLoad [ machine ] [ resource ] ;
             }
@@ -190,7 +190,7 @@ namespace ROADEF12COMMON
             const std::list<ushort>&
             getProcessesPerService ( ushort serviceId ) const
             {
-                throwing_assert ( serviceId < _parameters.services.size() ) ;
+                Util::throwing_assert ( serviceId < _parameters.services.size() ) ;
 
                 return _serviceToProcess [ serviceId ];
             }
@@ -205,7 +205,7 @@ namespace ROADEF12COMMON
             const ushort
             getNumLocationsPerService ( ushort serviceId ) const
             {
-                throwing_assert ( serviceId < _parameters.services.size() ) ;
+                Util::throwing_assert ( serviceId < _parameters.services.size() ) ;
 
                 return _serviceToNumLocations [ serviceId ] ;
             }
@@ -355,9 +355,9 @@ namespace ROADEF12COMMON
                 std::set<ushort>& locations
             )
             {
-                throwing_assert ( service < _parameters.services.size() ) ;
-                throwing_assert ( process < _parameters.processes.size() ) ;
-                throwing_assert ( machine < _parameters.machines.size() ) ;
+                Util::throwing_assert ( service < _parameters.services.size() ) ;
+                Util::throwing_assert ( process < _parameters.processes.size() ) ;
+                Util::throwing_assert ( machine < _parameters.machines.size() ) ;
 
                 int location
                     = _parameters.machines.getLocation ( machine );
@@ -382,8 +382,8 @@ namespace ROADEF12COMMON
             void
             updateMachineLoad ( ushort process, ushort machine )
             {
-                throwing_assert ( process < _parameters.processes.size() ) ;
-                throwing_assert ( machine < _parameters.machines.size() ) ;
+                Util::throwing_assert ( process < _parameters.processes.size() ) ;
+                Util::throwing_assert ( machine < _parameters.machines.size() ) ;
 
                 for ( ushort
                       resource = 0;
