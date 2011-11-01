@@ -13,7 +13,7 @@ set ( roadef12_VERSION_PATCH 1 )
 # -------------------------------------------------------------------
 include ( InstallRequiredSystemLibraries )
 set ( CPACK_PACKAGE_DESCRIPTION_SUMMARY
-      "roadef12 common headers (parser, objects, ...)" )
+      "ROADEF 2012 common headers (parser, objects, ...)" )
 set ( CPACK_PACKAGE_VENDOR "daniperez" )
 set ( CPACK_PACKAGE_VERSION_MAJOR "${roadef12_VERSION_MAJOR}" )
 set ( CPACK_PACKAGE_VERSION_MINOR "${roadef12_VERSION_MINOR}" )
@@ -33,7 +33,7 @@ set ( CPACK_RPM_PACKAGE_DESCRIPTION
 set ( CPACK_RPM_PACKAGE_LICENSE "MIT" )
 set ( CPACK_RPM_PACKAGE_VENDOR "Dani Perez" )
 set ( CPACK_RPM_PACKAGE_GROUP "Development/Libraries" )
-set ( CPACK_RPM_PACKAGE_REQUIRES "boost >= 1.40.0, boost-devel >= 1.40.0" )
+set ( CPACK_RPM_PACKAGE_REQUIRES "boost >= 1.40.0" )
 set ( CPACK_RPM_CHANGELOG_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ChangeLog" )
 set ( CPACK_GENERATOR "ZIP;RPM" )
 
