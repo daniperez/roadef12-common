@@ -37,30 +37,52 @@
 ///////////////////////////////////////////////////////////////////////////
 
 /**
- * Like assert(3) but throws an std::logic_error instead.
- * Prints a stack trace in linux.
- * 
- * @param cond If cond is false, the exception is thrown.
- * @param fileName File where the assert occurs.
- * @param lineNumber Line number.
- * @throw Throws std::logic_error if cond is false.
+ * Misc methods used everywhere.
+ *
+ * @author daniperez
  */
-#define throwing_assert(x) __throwing_assert(x,__FILE__,__LINE__)
-void __throwing_assert ( bool cond, const char* fileName, int lineNumber )
+class Util
 {
-    
-    #if DEBUG
-    if ( ! cond )
-    {
-        std::string msg = "assert failed (" ;
-        msg            += fileName ;
-        msg            += ":" ;
-        msg            += boost::lexical_cast<std::string> ( lineNumber ) ;
-        msg            += ")" ;
-        
-        throw std::logic_error ( msg.c_str() );
-    }
-    #endif
-}
+    public:
 
+        /**
+         * Like assert(3) but throws an std::logic_error instead.
+         * 
+         * @param cond If cond is false, the exception is thrown.
+         * @throw Throws std::logic_error if cond is false.
+         */
+        static void throwing_assert ( bool cond )
+        {
+            throwing_assert_impl ( cond, __FILE__, __LINE__ );
+        }
+
+    protected:
+
+        /**
+         * Like assert(3) but throws an std::logic_error instead.
+         * Prints a stack trace in linux.
+         * 
+         * @param cond If cond is false, the exception is thrown.
+         * @param fileName File where the assert occurs.
+         * @param lineNumber Line number.
+         * @throw Throws std::logic_error if cond is false.
+         */
+        static void
+        throwing_assert_impl ( bool cond, const char* fileName, int lineNumber )
+        {
+            
+            #if DEBUG
+            if ( ! cond )
+            {
+                std::string msg = "assert failed (" ;
+                msg            += fileName ;
+                msg            += ":" ;
+                msg            += boost::lexical_cast<std::string> ( lineNumber ) ;
+                msg            += ")" ;
+                
+                throw std::logic_error ( msg.c_str() );
+            }
+            #endif
+        }
+};
 #endif

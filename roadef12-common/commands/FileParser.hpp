@@ -61,7 +61,7 @@ namespace ROADEF12COMMON {
             parseVector ( const char* fileName, std::vector<int>& output )
             throw ( ROADEF12COMMON::IOException, ROADEF12COMMON::ParseException )
             {
-                throwing_assert ( fileName != NULL );
+                Util::throwing_assert ( fileName != NULL );
                 
                 std::ifstream file ( fileName, std::ios::in );
                 
