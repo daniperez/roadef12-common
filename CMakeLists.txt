@@ -5,8 +5,8 @@ cmake_minimum_required ( VERSION 2.6 )
 # -------------------------------------------------------------------
 project ( roadef12-common )
 set ( roadef12_VERSION_MAJOR 0 )
-set ( roadef12_VERSION_MINOR 2 )
-set ( roadef12_VERSION_PATCH 3 )
+set ( roadef12_VERSION_MINOR 3 )
+set ( roadef12_VERSION_PATCH 0 )
 
 # -------------------------------------------------------------------
 # PACKAGING
