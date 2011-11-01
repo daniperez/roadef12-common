@@ -1,5 +1,5 @@
 * Tue Nov  1 2011 - v0.3.1
-- Minor fixes. throwing_assert is no in Util class. 
+- Finder fixes. throwing_assert is now in Util class. 
 
 * Tue Nov  1 2011 - v0.3.0
 - Roadef11 turns Roadef 12 :-) Namespace changed.
