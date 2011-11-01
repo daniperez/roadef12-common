@@ -21,9 +21,7 @@ A more involving installation process requires the use of CMake:
 1. Install the tarball or RPM
 2. Create a CMakeLists.txt like the one found in examples/CMakeLists.txt.
    In summary:
-    1. Find the package:
-
-        > find_package ( roadef12-common )
+    1. Find the package: find_package ( roadef12-common )
     2. If the package is found, it will define:
         * roadef12-common_INCLUDE_DIRS: where the headers were installed.  
         * roadef12-common_DATA: folder containing the data instances.
