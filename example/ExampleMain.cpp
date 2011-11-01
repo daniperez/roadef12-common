@@ -22,10 +22,8 @@
 // 
 ///////////////////////////////////////////////////////////////////////////
 // roadef12 
-#include "roadef12-common/service/Service.hpp"
-#include "roadef12-common/service/ProgramOptions.hpp"
-#include "roadef12-common/service/ServiceExceptions.hpp"
-#include "roadef12-common/util/Util.hpp"
+#include <roadef12-common/service/Service.hpp>
+#include <roadef12-common/service/ProgramOptions.hpp>
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <iostream>
