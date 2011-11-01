@@ -138,6 +138,7 @@ if ( Boost_FOUND)
     find_path ( roadef12-common_DATA "data_example/initial_solution_example.txt"
                 PATHS
                   "${CMAKE_SOURCE_DIR}/roadef12-material/data/"
+                  "/usr/share/roadef12-common/material/data/"
                   "@CMAKE_INSTALL_PREFIX@/share/roadef12-common/material/data/"
                 DOC "Data instances" )
 
