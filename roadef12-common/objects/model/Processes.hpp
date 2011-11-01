@@ -20,13 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __roadef11_PROCESSES_HPP
-#define __roadef11_PROCESSES_HPP
+#ifndef __roadef12_PROCESSES_HPP
+#define __roadef12_PROCESSES_HPP
 ///////////////////////////////////////////////////////////////////////////
-// roadef11
-#include "roadef11-common/objects/model/Resources.hpp"
-#include "roadef11-common/objects/model/Machines.hpp"
-#include "roadef11-common/objects/model/Services.hpp"
+// roadef12
+#include "roadef12-common/objects/model/Resources.hpp"
+#include "roadef12-common/objects/model/Machines.hpp"
+#include "roadef12-common/objects/model/Services.hpp"
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <vector>
@@ -36,7 +36,7 @@
 #include <boost/lexical_cast.hpp>
 ///////////////////////////////////////////////////////////////////////////
 
-namespace ROADEF11
+namespace ROADEF12COMMON
 {
     /**
      * Process-related procedures.

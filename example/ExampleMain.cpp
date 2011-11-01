@@ -21,28 +21,28 @@
 // THE SOFTWARE.
 // 
 ///////////////////////////////////////////////////////////////////////////
-// roadef11 
-#include "roadef11-common/service/Service.hpp"
-#include "roadef11-common/service/ProgramOptions.hpp"
-#include "roadef11-common/service/ServiceExceptions.hpp"
-#include "roadef11-common/util/Util.hpp"
+// roadef12 
+#include "roadef12-common/service/Service.hpp"
+#include "roadef12-common/service/ProgramOptions.hpp"
+#include "roadef12-common/service/ServiceExceptions.hpp"
+#include "roadef12-common/util/Util.hpp"
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <iostream>
 ///////////////////////////////////////////////////////////////////////////
 
-class ExampleService : public ROADEF11::Service
+class ExampleService : public ROADEF12COMMON::Service
 {
     public:
 
-        ExampleService ( const ROADEF11::ServiceInput& input )
-            throw ( ROADEF11::IOException, ROADEF11::ParseException )
-            : ROADEF11::Service ( input )
+        ExampleService ( const ROADEF12COMMON::ServiceInput& input )
+            throw ( ROADEF12COMMON::IOException, ROADEF12COMMON::ParseException )
+            : ROADEF12COMMON::Service ( input )
         {
         }
 
         virtual void optimize ()
-          throw ( ROADEF11::IOException, ROADEF11::ParseException )
+          throw ( ROADEF12COMMON::IOException, ROADEF12COMMON::ParseException )
         {
             std::cout << "processes=" << params.processes.size()
                       << " machines=" << params.machines.size()
@@ -71,8 +71,8 @@ int main ( int argc, char **argv )
 {
     try
     {
-        ROADEF11::ServiceInput input
-            = ROADEF11::ProgramOptions::parseCommandLine ( argc, argv );
+        ROADEF12COMMON::ServiceInput input
+            = ROADEF12COMMON::ProgramOptions::parseCommandLine ( argc, argv );
             
         ExampleService service ( input );
 
@@ -84,15 +84,15 @@ int main ( int argc, char **argv )
 
         exit ( EXIT_SUCCESS );
     }
-    catch ( ROADEF11::DoNotContinue& e )
+    catch ( ROADEF12COMMON::DoNotContinue& e )
     {
         exit ( EXIT_SUCCESS );
     }
-    catch( ROADEF11::ParseException& e )
+    catch( ROADEF12COMMON::ParseException& e )
     {
         std::cerr << "Error while parsing: " << e.what() << std::endl;
     }
-    catch ( ROADEF11::InvalidSolution& e )
+    catch ( ROADEF12COMMON::InvalidSolution& e )
     {
         std::cerr << "The produced solution is not valid" << std::endl;
     }

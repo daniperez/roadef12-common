@@ -20,10 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __roadef11_RESOURCES_HPP
-#define __roadef11_RESOURCES_HPP
+#ifndef __roadef12_RESOURCES_HPP
+#define __roadef12_RESOURCES_HPP
 ///////////////////////////////////////////////////////////////////////////
-// roadef11
+// roadef12
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <vector>
@@ -35,7 +35,7 @@
 #include <boost/lexical_cast.hpp>
 ///////////////////////////////////////////////////////////////////////////
 
-namespace ROADEF11
+namespace ROADEF12COMMON
 {    
     /**
      * Resource-related procedures.

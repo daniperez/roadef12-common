@@ -24,25 +24,25 @@
 // BOOST
 #include <boost/test/unit_test.hpp>
 ///////////////////////////////////////////////////////////////////////////
-// roadef11
-#include "roadef11-common/service/Service.hpp"
-#include "roadef11-common/service/ProgramOptions.hpp"
-#include "roadef11-common/config.h"
+// roadef12
+#include "roadef12-common/service/Service.hpp"
+#include "roadef12-common/service/ProgramOptions.hpp"
+#include "roadef12-common/config.h"
 ///////////////////////////////////////////////////////////////////////////
 
-ROADEF11::ServiceInput getExampleServiceInput()
+ROADEF12COMMON::ServiceInput getExampleServiceInput()
 {
-    ROADEF11::ServiceInput input;
+    ROADEF12COMMON::ServiceInput input;
     
     input.parameters
       = std::string(PROJECT_SOURCE_DIR) +
-        "/roadef11-material/data/data_example/model_example.txt";
+        "/roadef12-material/data/data_example/model_example.txt";
     input.referenceSolution
       = std::string(PROJECT_SOURCE_DIR) +
-        "/roadef11-material/data/data_example/initial_solution_example.txt";
+        "/roadef12-material/data/data_example/initial_solution_example.txt";
     input.solution
       = std::string(PROJECT_SOURCE_DIR) +
-        "/roadef11-material/data/data_example/new_solution_example.txt";
+        "/roadef12-material/data/data_example/new_solution_example.txt";
     
     return input;
 }
@@ -61,18 +61,18 @@ BOOST_AUTO_TEST_CASE( SanityCheck02 )
     // This will print the team's name in the stdout and
     // throw DoNotContinue exception.
     BOOST_CHECK_THROW (
-        ROADEF11::ProgramOptions::parseCommandLine
+        ROADEF12COMMON::ProgramOptions::parseCommandLine
           ( 2, const_cast<char**>(commandLine)),
-        ROADEF11::DoNotContinue
+        ROADEF12COMMON::DoNotContinue
     );
 }
 
 #ifdef USE_CHECKER
 BOOST_AUTO_TEST_CASE( CheckerCheck )
 {
-    ROADEF11::ServiceInput input = getExampleServiceInput();
+    ROADEF12COMMON::ServiceInput input = getExampleServiceInput();
    
-    ROADEF11::Service service ( input );
+    ROADEF12COMMON::Service service ( input );
     
     BOOST_CHECK ( service.check() == 2411 );
 }

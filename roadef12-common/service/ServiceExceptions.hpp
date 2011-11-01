@@ -20,13 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __roadef11_SERVICE_EXCEPTIONS_HPP
-#define __roadef11_SERVICE_EXCEPTIONS_HPP
+#ifndef __roadef12_SERVICE_EXCEPTIONS_HPP
+#define __roadef12_SERVICE_EXCEPTIONS_HPP
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <stdexcept>
 ///////////////////////////////////////////////////////////////////////////
-namespace ROADEF11 
+namespace ROADEF12COMMON 
 {
     /**
      * When an input parameter is not valid.

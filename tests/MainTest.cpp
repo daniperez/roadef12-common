@@ -29,9 +29,9 @@
 #include <boost/test/detail/unit_test_parameters.hpp>
 ///////////////////////////////////////////////////////////////////////////
 
-// This can be set in runtime:
+// This can be set at runtime:
 //
-// e.g.: ./roadef11/TestSuite --output_format=XML --report_level=detailed
+// e.g.: ./roadef12/TestSuite --output_format=XML --report_level=detailed
 //       --show_progress=yes
 //
 struct MyConfig

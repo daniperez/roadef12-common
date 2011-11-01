@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __roadef11_TYPES_HPP
-#define __roadef11_TYPES_HPP
+#ifndef __roadef12_TYPES_HPP
+#define __roadef12_TYPES_HPP
 
 // Rounded up to the closest 2 power
 #define MAX_NUM_PROCESSES     65536
@@ -33,7 +33,7 @@
 #define MAX_NUM_RESOURCES     32
 #define MAX_BALANCE_COSTS     16
 
-namespace ROADEF11
+namespace ROADEF12COMMON
 {
 };
 

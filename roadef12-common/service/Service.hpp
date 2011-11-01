@@ -20,19 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __roadef11_SERVICE_HPP
-#define __roadef11_SERVICE_HPP
+#ifndef __roadef12_SERVICE_HPP
+#define __roadef12_SERVICE_HPP
 ///////////////////////////////////////////////////////////////////////////
-// roadef11 material 
+// roadef12 material 
 #ifdef USE_CHECKER 
-#include "roadef11-material/solution_checker/solution_checker.h"
+#include "roadef12-material/solution_checker/solution_checker.h"
 #endif
 ///////////////////////////////////////////////////////////////////////////
-// roadef11 Service
-#include "roadef11-common/service/ServiceExceptions.hpp"
-#include "roadef11-common/objects/Parameters.hpp"
-#include "roadef11-common/objects/Assignment.hpp"
-#include "roadef11-common/commands/FileParser.hpp"
+// roadef12 Service
+#include "roadef12-common/service/ServiceExceptions.hpp"
+#include "roadef12-common/objects/Parameters.hpp"
+#include "roadef12-common/objects/Assignment.hpp"
+#include "roadef12-common/commands/FileParser.hpp"
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <vector>
@@ -41,13 +41,13 @@
 #include <boost/shared_ptr.hpp>
 ///////////////////////////////////////////////////////////////////////////
 
-namespace ROADEF11
+namespace ROADEF12COMMON
 {
     /**
      * Service's input.
      * 
      * @author daniperez
-     * @todo Remove roadef11/bom/Assignment.hpp dependency in Service.cpp
+     * @todo Remove roadef12/bom/Assignment.hpp dependency in Service.cpp
      * @todo Model.hpp is BOM, only pointers to it should be used.
      */
     struct ServiceInput
@@ -106,8 +106,8 @@ namespace ROADEF11
              * @throw IOException if the input files cannot be read.
              * @throw ParseException if the input files have wrong format.
              */
-            Service ( const ROADEF11::ServiceInput& input )
-              throw ( ROADEF11::IOException, ROADEF11::ParseException )
+            Service ( const ROADEF12COMMON::ServiceInput& input )
+              throw ( ROADEF12COMMON::IOException, ROADEF12COMMON::ParseException )
                 : options  ( parseInput ( input ) ),
                   params   ( _parametersArray ),
                   firstAssignment
@@ -173,9 +173,9 @@ namespace ROADEF11
              * @throw IOException if the input files cannot be read.
              * @throw ParseException if the input files have wrong format.
              */ 
-            long check () throw ( ROADEF11::InvalidSolution,
-                                  ROADEF11::IOException,
-                                  ROADEF11::ParseException )
+            long check () throw ( ROADEF12COMMON::InvalidSolution,
+                                  ROADEF12COMMON::IOException,
+                                  ROADEF12COMMON::ParseException )
             {
                 #ifdef USE_CHECKER                
                 using roadef_challenge::DataParser;
@@ -210,7 +210,7 @@ namespace ROADEF11
                 }
                 else
                 {
-                    throw ROADEF11::InvalidSolution();
+                    throw ROADEF12COMMON::InvalidSolution();
                 }
                 #else
                 return 0;
@@ -268,7 +268,7 @@ namespace ROADEF11
              */
             const ServiceInput&
             parseInput ( const ServiceInput& input )
-            throw ( ROADEF11::IOException, ROADEF11::ParseException )
+            throw ( ROADEF12COMMON::IOException, ROADEF12COMMON::ParseException )
             {
                 FileParser::parseVector ( input.parameters.c_str(), _parametersArray );
                 
@@ -285,7 +285,7 @@ namespace ROADEF11
             /**
              * The parsed command line options.
              */           
-            const ROADEF11::ServiceInput&       options;
+            const ROADEF12COMMON::ServiceInput& options;
             
             /**
              * Problem parameters.

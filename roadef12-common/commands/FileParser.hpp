@@ -20,13 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __roadef11_FILE_PARSER_HPP
-#define __roadef11_FILE_PARSER_HPP
+#ifndef __roadef12_FILE_PARSER_HPP
+#define __roadef12_FILE_PARSER_HPP
 ///////////////////////////////////////////////////////////////////////////
-// roadef11
-#include "roadef11-common/util/Util.hpp"
-#include "roadef11-common/service/ServiceExceptions.hpp"
-#include "roadef11-common/objects/Assignment.hpp"
+// roadef12
+#include "roadef12-common/util/Util.hpp"
+#include "roadef12-common/service/ServiceExceptions.hpp"
+#include "roadef12-common/objects/Assignment.hpp"
 ///////////////////////////////////////////////////////////////////////////
 // STD
 #include <stdexcept>
@@ -38,7 +38,7 @@
 #include <boost/shared_ptr.hpp>
 ///////////////////////////////////////////////////////////////////////////
 
-namespace ROADEF11 {
+namespace ROADEF12COMMON {
 
     /**
      * File parser.
@@ -59,7 +59,7 @@ namespace ROADEF11 {
              */
             static void
             parseVector ( const char* fileName, std::vector<int>& output )
-            throw ( ROADEF11::IOException, ROADEF11::ParseException )
+            throw ( ROADEF12COMMON::IOException, ROADEF12COMMON::ParseException )
             {
                 throwing_assert ( fileName != NULL );
                 
@@ -67,7 +67,7 @@ namespace ROADEF11 {
                 
                 if ( file.fail() )
                 {
-                    throw ROADEF11::IOException
+                    throw ROADEF12COMMON::IOException
                     (
                         (
                             std::string ( "'" ) + fileName +
@@ -84,7 +84,7 @@ namespace ROADEF11 {
                     
                     if ( file.fail() )
                     {
-                        throw ROADEF11::IOException
+                        throw ROADEF12COMMON::IOException
                         (
                             (std::string(fileName) +
                                 std::string (" cannot be read")).c_str()
@@ -97,7 +97,7 @@ namespace ROADEF11 {
                 
                 if ( file.fail() )
                 {
-                    throw ROADEF11::IOException
+                    throw ROADEF12COMMON::IOException
                     (
                         (std::string(fileName) +
                             std::string (" cannot be closed")).c_str()
