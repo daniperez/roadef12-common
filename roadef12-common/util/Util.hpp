@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-#ifndef __UTIL_HPP
-#define __UTIL_HPP
+#ifndef __roadef12_common_UTIL_HPP
+#define __roadef12_common_UTIL_HPP
 ///////////////////////////////////////////////////////////////////////////
 // roadef12
 #include "roadef12-common/service/ServiceExceptions.hpp"
