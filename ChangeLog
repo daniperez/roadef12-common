@@ -1,21 +1,21 @@
-* Tue Nov  1 2011 - v0.3.1
-- Finder fixes. throwing_assert is now in Util class. 
+* Tue Nov 01 2011 Dani Perez - 0.3.1
+- Finder fixes. throwing_assert is now in Util class.
 
-* Tue Nov  1 2011 - v0.3.0
-- Roadef11 turns Roadef 12 :-) Namespace changed.
+* Tue Nov 01 2011 Dani Perez - 0.3.0
+- Roadef11 turns Roadef 12.2.espace changed.
 
-* Mon Oct 31 2011 - v0.2.3
+* Mon Oct 31 2011 Dani Perez - 0.2.3
 - Removed some code that was not being used.
 
-* Sun Oct 30 2011 - v0.2.2
+* Sun Oct 30 2011 Dani Perez - 0.2.2
 - Macro added to check all the instances at once. 
 
-* Sun Oct 30 2011 - v0.2.1
+* Sun Oct 30 2011 Dani Perez - 0.2.1
 - Fixes in the Roadef11CommonConfig script. Roadef11CommonConfig.cmake
   script is automatically found now.
 
-* Sun Oct 30 2011 - v0.2.0
+* Sun Oct 30 2011 Dani Perez - 0.2.0
 - Improved CMake script to allow third parties use the library.
 
-* Sun Oct 16 2011 - v0.1.0
+* Sun Oct 16 2011 Dani Perez - 0.1.0
 - First version released.
