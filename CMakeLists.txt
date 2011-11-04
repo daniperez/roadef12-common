@@ -7,29 +7,36 @@ project ( roadef12-common )
 set ( roadef12_VERSION_MAJOR 0 )
 set ( roadef12_VERSION_MINOR 3 )
 set ( roadef12_VERSION_PATCH 1 )
+set ( roadef12_VERSION_REL   1 )
+
+# This should be done only for RELWITHDEBINFO, but it doesn't work
+set ( CMAKE_EXE_LINKER_FLAGS "-s" CACHE INTERNAL "Strip binaries" )
 
 # -------------------------------------------------------------------
 # PACKAGING
 # -------------------------------------------------------------------
 include ( InstallRequiredSystemLibraries )
+set ( CPACK_RPM_PACKAGE_NAME "${PROJECT_NAME}-devel" )
 set ( CPACK_PACKAGE_DESCRIPTION_SUMMARY
       "ROADEF 2012 common headers (parser, objects, ...)" )
 set ( CPACK_PACKAGE_VENDOR "daniperez" )
+set ( CPACK_RPM_PACKAGE_URL "http://bitbucket.org/daniperez/roadef12-common" )
 set ( CPACK_PACKAGE_VERSION_MAJOR "${roadef12_VERSION_MAJOR}" )
 set ( CPACK_PACKAGE_VERSION_MINOR "${roadef12_VERSION_MINOR}" )
 set ( CPACK_PACKAGE_VERSION_PATCH "${roadef12_VERSION_PATCH}" )
 set ( CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_SOURCE_DIR}/README.md )
 set ( CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING" )
+set ( CPACK_RPM_PACKAGE_VERSION
+      "${roadef12_VERSION_MAJOR}.${roadef12_VERSION_MINOR}.${roadef12_VERSION_PATCH}" )
+set ( CPACK_RPM_PACKAGE_RELEASE
+      "${roadef12_VERSION_REL}" )
 set ( CPACK_PACKAGE_FILE_NAME
-      "${PROJECT_NAME}-${roadef12_VERSION_MAJOR}.${roadef12_VERSION_MINOR}.${roadef12_VERSION_PATCH}" )
+      "${CPACK_RPM_PACKAGE_NAME}-${CPACK_RPM_PACKAGE_VERSION}-${CPACK_RPM_PACKAGE_RELEASE}.${CMAKE_SYSTEM_PROCESSOR}" )
 set ( CPACK_RPM_PACKAGE_SUMMARY "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}" )
 set ( CPACK_RPM_PACKAGE_DESCRIPTION
       "Google's ROADEF Challenge (2011-2012) starter kit with a parser and 
       handy classes to solve the problem. 'roadef12-common' is a header-only 
-      library. You can find an example of use in example/ExampleMain.cpp. The 
-      only dependencies of the library are the STL and Boost's shared_ptr and 
-      foreach. The author is neither affiliated nor endorsed by Google or 
-      Roadef." )
+      library." )
 set ( CPACK_RPM_PACKAGE_LICENSE "MIT" )
 set ( CPACK_RPM_PACKAGE_VENDOR "Dani Perez" )
 set ( CPACK_RPM_PACKAGE_GROUP "Development/Libraries" )
@@ -77,14 +84,14 @@ target_link_libraries ( roadef12-checker checkerlib )
 # -------------------------------------------------------------------
 # TARGET : tests 
 # -------------------------------------------------------------------
+
+include ( add_test_suite )
+
+set ( DATA_DIR "${CMAKE_SOURCE_DIR}/roadef12-material/data/" )
+enable_testing() 
+
 if ( Boost_FOUND )
-
-    include ( add_test_suite )
-
-    set ( DATA_DIR "${CMAKE_SOURCE_DIR}/roadef12-material/data/" )
-    enable_testing() 
-
-    # i) Main Test Suite
+# i) Main Test Suite
     set (
             MainTestSuiteSources 
             tests/MainTest.cpp
@@ -94,16 +101,16 @@ if ( Boost_FOUND )
     add_test_suite ( MainTestSuite "${MainTestSuiteSources}" )
 
     target_link_libraries ( MainTestSuite ${Boost_LIBRARIES} )
-
-    # ii) Doxgygen run (just seeking for missing documentation)
-    add_test (
-               NAME "DoxygenErrors" 
-               WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-               COMMAND "${CMAKE_SOURCE_DIR}/scripts/doxytest.sh"
-                       "${DOXYGEN_EXECUTABLE}"
-                       "${DOXYFILE}"
-             )
 endif ()
+
+# ii) Doxgygen run (just seeking for missing documentation)
+add_test (
+           NAME "DoxygenErrors" 
+#           WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+           COMMAND "${CMAKE_SOURCE_DIR}/scripts/doxytest.sh"
+                   "${DOXYGEN_EXECUTABLE}"
+                   "${DOXYFILE}"
+         )
 
 # -------------------------------------------------------------------
 # INSTALLATIONS
@@ -131,7 +138,7 @@ configure_file (
 )
 install ( FILES "${CMAKE_CURRENT_BINARY_DIR}/roadef12-common-config.cmake"
                 "scripts/add_test_suite.cmake"
-                DESTINATION lib/cmake/${CPACK_PACKAGE_FILE_NAME}/ )
+                DESTINATION share/cmake/${CPACK_PACKAGE_FILE_NAME}/ )
 
 # Misc
 install( FILES README.md COPYING ChangeLog
@@ -147,7 +154,7 @@ install ( TARGETS roadef12-checker
           LIBRARY       DESTINATION lib
         )
 
-install ( EXPORT roadef12-checker DESTINATION lib/cmake/${CPACK_PACKAGE_FILE_NAME}/ )
+install ( EXPORT roadef12-checker DESTINATION share/cmake/${CPACK_PACKAGE_FILE_NAME}/ )
 
 # -------------------------------------------------------------------
 # SUBDIRS
@@ -155,12 +162,20 @@ install ( EXPORT roadef12-checker DESTINATION lib/cmake/${CPACK_PACKAGE_FILE_NAM
 add_subdirectory ( ${PROJECT_NAME} )
 add_subdirectory ( example )
 
-
 # Keep this last
+
+set ( check_DEPS "" )
+
+if (Boost_FOUND)
+  set ( check_DEPS Main MainTestSuite roadef12-checker)
+else ()
+  set ( check_DEPS Main roadef12-checker)
+endif()
+
 add_custom_target(
               check
               COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure 
-              DEPENDS Main MainTestSuite roadef12-checker
+              DEPENDS ${check_DEPS}
              )
 
 include ( CPack )
