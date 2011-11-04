@@ -15,6 +15,7 @@ set ( CMAKE_EXE_LINKER_FLAGS "-s" CACHE INTERNAL "Strip binaries" )
 # -------------------------------------------------------------------
 # PACKAGING
 # -------------------------------------------------------------------
+set ( CPACK_RPM_PACKAGE_DEBUG true )
 include ( InstallRequiredSystemLibraries )
 set ( CPACK_RPM_PACKAGE_NAME "${PROJECT_NAME}-devel" )
 set ( CPACK_PACKAGE_DESCRIPTION_SUMMARY
