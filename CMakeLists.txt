@@ -12,6 +12,12 @@ set ( roadef12_VERSION_REL   1 )
 # This should be done only for RELWITHDEBINFO, but it doesn't work
 set ( CMAKE_EXE_LINKER_FLAGS "-s" CACHE INTERNAL "Strip binaries" )
 
+IF("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "i686")
+  SET(SYSTEM_ARCH "i386")
+ELSE()
+  SET(SYSTEM_ARCH ${CMAKE_SYSTEM_PROCESSOR})
+ENDIF()
+
 # -------------------------------------------------------------------
 # PACKAGING
 # -------------------------------------------------------------------
@@ -32,7 +38,7 @@ set ( CPACK_RPM_PACKAGE_VERSION
 set ( CPACK_RPM_PACKAGE_RELEASE
       "${roadef12_VERSION_REL}" )
 set ( CPACK_PACKAGE_FILE_NAME
-      "${CPACK_RPM_PACKAGE_NAME}-${CPACK_RPM_PACKAGE_VERSION}-${CPACK_RPM_PACKAGE_RELEASE}.${CMAKE_SYSTEM_PROCESSOR}" )
+      "${CPACK_RPM_PACKAGE_NAME}-${CPACK_RPM_PACKAGE_VERSION}-${CPACK_RPM_PACKAGE_RELEASE}.${SYSTEM_ARCH}" )
 set ( CPACK_RPM_PACKAGE_SUMMARY "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}" )
 set ( CPACK_RPM_PACKAGE_DESCRIPTION
       "Google's ROADEF Challenge (2011-2012) starter kit with a parser and 
