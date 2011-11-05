@@ -1,5 +1,6 @@
 * Tue Nov 01 2011 Dani Perez - 0.3.1-1
 - Finder fixes. throwing_assert is now in Util class.
+- Generated RPM is now more compliant with rpmlint.
 
 * Tue Nov 01 2011 Dani Perez - 0.3.0-1
 - Roadef11 turns Roadef 12.2.espace changed.
