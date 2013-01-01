@@ -1,0 +1,13 @@
+language: node_js
+
+before_install:
+  - sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y update > /dev/null
+  - sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y install cmake > /dev/null
+script:
+  - "./autogen.sh"
+  - "cd build/Release"
+  - "make"
+
+notifications:
+  email: true 
+  on_failure: change

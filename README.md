@@ -1,5 +1,10 @@
+Roadef12-Common
+===============
+
+[![Build Status](https://travis-ci.org/daniperez/roadef12-common.png)](https://travis-ci.org/daniperez/roadef12-common.txt)
+
 About
-=====
+-----
 
 This is a starter kit for Google's ROADEF Challenge (2011-2012), with a parser
 and handy classes to solve the problem. roadef12-common is a header-only
@@ -11,7 +16,7 @@ The author is neither affiliated nor endorsed by Google or ROADEF.
 More info about the challenge can be found [here](http://challenge.roadef.org/2012/en/index.php).
 
 Installation 
-============
+------------
 
 roadef12-common is a header-only library and thus putting those headers
 in any location reachable by your compiler will do the trick.
@@ -33,7 +38,7 @@ A more involving installation process requires the use of CMake:
 
 
 How to use it 
-=============
+-------------
 
 roadef12-common is a header-only library. You can find an example
 of use in example/ExampleMain.cpp.
