@@ -2,7 +2,7 @@ language: node_js
 
 before_install:
   - sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y update > /dev/null
-  - sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y install cmake libboost-dev libboost-program-options-dev libboost-program-options > /dev/null
+  - sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y install cmake libboost-* > /dev/null
 script:
   - "./autogen.sh"
   - "cd build/Release"
