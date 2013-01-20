@@ -1,7 +1,7 @@
 Roadef12-Common
 ===============
 
-[![Build Status](https://travis-ci.org/daniperez/roadef12-common.png)](https://travis-ci.org/daniperez/roadef12-common.txt)
+[![Build Status](https://travis-ci.org/daniperez/roadef12-common.png)](https://travis-ci.org/daniperez/roadef12-common)
 
 About
 -----
