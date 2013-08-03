@@ -86,7 +86,7 @@ file ( GLOB_RECURSE
 add_library ( checkerlib ${checker_SOURCES} )
 add_executable ( roadef12-checker
                  "roadef12-material/solution_checker/solution_checker_run.cc" )
-target_link_libraries ( roadef12-checker checkerlib )
+target_link_libraries ( roadef12-checker checkerlib  ${Boost_LIBRARIES} )
 
 # -------------------------------------------------------------------
 # TARGET : tests 
